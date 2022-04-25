@@ -12,7 +12,7 @@ use strict;
 use warnings;
 use Sys::OsRelease;
 
-use Test::More tests => 4;                      # last test to print
+use Test::More tests => 6;                      # last test to print
 
 # instantiation (2 tests)
 my $osrelease = Sys::OsRelease->instance();
@@ -25,3 +25,19 @@ my @std_osr_path = Sys::OsRelease::std_osr_path();
 ok(scalar @std_osr_path > 0, "std_osr_path() returned non-empty list");
 my @std_attrs = Sys::OsRelease::std_attrs();
 ok(scalar @std_attrs > 0, "std_attrs() returned non-empty list");
+
+# check if os-release exists on the system performing the tests (2 tests)
+SKIP: {
+    my $osr_found;
+    foreach my $dir (@std_osr_path) {
+        if ( -f "$dir/os-release" ) {
+            $osr_found = "$dir/os-release";
+            last;
+        }
+    }
+    skip("os-release not found on test system", 2) if not $osr_found;
+
+    ok($osrelease->can("id"), "id() method exists");
+    my $id = $osrelease->id();
+    ok(defined $id, "id() method returned a value");
+}
