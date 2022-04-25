@@ -20,6 +20,9 @@ use Carp qw(carp croak);
 # the instance - use Sys::OsRelease->instance() to get it
 my $_instance;
 
+# default search path for os-release file
+my @std_osr_path = qw(/etc /usr/lib /run/host);
+
 # defined attributes from FreeDesktop's os-release standard - this needs to be kept up-to-date with the standard
 my @std_attrs = qw(NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME
     BUILD_ID IMAGE_ID IMAGE_VERSION HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL PRIVACY_POLICY_URL
@@ -32,8 +35,12 @@ sub fold_case
     my $str = shift;
 
     # use fc if available, otherwise lc to support older Perls
-    return $can_fc ?  fc $str : lc $str;
+    return $can_fc ?  CORE::fc($str) : lc($str);
 }
+
+# access module data
+sub std_osr_path { return @std_osr_path; }
+sub std_attrs { return @std_attrs; }
 
 # new method calls instance
 sub new
@@ -56,9 +63,6 @@ sub instance
     if (not defined $_instance) {
         $_instance = $class->_new_instance(@params);
     }
-
-    # generate accessor methods
-    $_instance->gen_accessors();
 
     # return singleton instance
     return $_instance;
@@ -86,7 +90,7 @@ sub _new_instance
 
     # locate os-release file in standard places
     my $osrelease_path;
-    my @search_path = ((exists $obj{config}{osr_path}) ? @{$obj{config}{osr_path}} : qw(/etc /usr/lib /run/host));
+    my @search_path = ((exists $obj{config}{osr_path}) ? @{$obj{config}{osr_path}} : @std_osr_path);
     foreach my $search_dir (@search_path) {
         if (-r "$search_dir/os-release") {
             $osrelease_path = $search_dir."/os-release";
@@ -126,8 +130,12 @@ sub _new_instance
     }
     ## use critic (InputOutput::RequireBriefOpen)
 
+    # generate accessor methods
+    my $obj = bless \%obj, $class;
+    $obj->gen_accessors();
+
     # instantiate object
-    return bless \%obj, $class;
+    return $obj;
 }
 
 # call destructor when program ends
@@ -151,12 +159,15 @@ sub config
 sub gen_accessors
 {
     my $self = shift;
-    my $class = (ref $self) ? ref $self : $self; 
+    my $class = (ref $self) ? (ref $self) : $self; 
 
     # generate read-only accessors for attributes actually found in os-release
     foreach my $key (sort keys %{$self}) {
         next if $key eq "config"; # protect special/reserved attribute
-        my $method_name = "$class::$key";
+
+        my $method_name = $class."::".$key;
+        ## no critic (TestingAndDebugging::ProhibitNoStrict)
+        no strict 'refs';
         *{$method_name} = sub { return $self->{$key} // undef };
     }
 
@@ -165,7 +176,10 @@ sub gen_accessors
         next if $std_attr eq "config"; # protect special/reserved attribute
         my $fc_attr = fold_case($std_attr);
         next if exists $self->{$fc_attr};
-        my $method_name = "$class::$fc_attr";
+
+        my $method_name = $class."::".$fc_attr;
+        ## no critic (TestingAndDebugging::ProhibitNoStrict)
+        no strict 'refs';
         *{$method_name} = sub { return; };
     }
     return;
