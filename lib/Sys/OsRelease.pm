@@ -146,17 +146,17 @@ sub _new_instance
     return $obj_ref;
 }
 
-# call destructor when program ends
-END {
-    # dereferencing will destroy singleton instance
-    undef $_instance;
+# test if instance is defined for testing
+sub defined_instance
+{
+    return ((defined $_instance) and $_instance->isa(__PACKAGE__)) ? 1 : 0;
 }
 
 # attribute existence checker
 sub has_attr
 {
     my ($self, $key) = @_;
-    return exists $self->{fold_case($key)};
+    return ((exists $self->{fold_case($key)}) ? 1 : 0);
 }
 
 # attribute read-only accessor
@@ -170,7 +170,7 @@ sub get
 sub has_config
 {
     my ($self, $key) = @_;
-    return exists $self->{config}{$key};
+    return ((exists $self->{config}{$key}) ? 1 : 0);
 }
 
 # config read/write accessor
@@ -187,16 +187,11 @@ sub config
 sub gen_accessors
 {
     my $self = shift;
-    my $class = (ref $self) ? (ref $self) : $self; 
 
     # generate read-only accessors for attributes actually found in os-release
     foreach my $key (sort keys %{$self}) {
         next if $key eq "config"; # protect special/reserved attribute
-
-        my $method_name = $class."::".$key;
-        ## no critic (TestingAndDebugging::ProhibitNoStrict)
-        no strict 'refs';
-        *{$method_name} = sub { return $self->{$key} // undef };
+        $self->gen_accessor($key);
     }
 
     # generate undef accessors for standardized attributes which were not found in os-release
@@ -204,13 +199,71 @@ sub gen_accessors
         next if $std_attr eq "config"; # protect special/reserved attribute
         my $fc_attr = fold_case($std_attr);
         next if $self->has_attr($fc_attr);
-
-        my $method_name = $class."::".$fc_attr;
-        ## no critic (TestingAndDebugging::ProhibitNoStrict)
-        no strict 'refs';
-        *{$method_name} = sub { return; };
+        $self->gen_accessor($fc_attr);
     }
     return;
+}
+
+# generate accessor
+sub gen_accessor
+{
+    my ($self, $name) = @_;
+    my $class = (ref $self) ? (ref $self) : $self; 
+    my $method_name = $class."::".$name;
+
+    # mark accessor flag in configuration so it can be deleted for cleanup (mainly for testing)
+    if (not exists $self->{config}{accessor}) {
+        $self->{config}{accessor} = {};
+    }
+
+    # generate accessor as read-only or undef depending whether it exists in the running system
+    if (exists $self->{$name}) {
+        # generate read-only accessor for attribute which was found in os-release
+        $self->{config}{accessor}{$name} = sub { return $self->{$name} // undef };
+    } else {
+        # generate undef accessor for standard attribute which was not found in os-release
+        $self->{config}{accessor}{$name} = sub { return; };
+    }
+
+    ## no critic (TestingAndDebugging::ProhibitNoStrict)
+    no strict 'refs';
+    *{$method_name} = $self->{config}{accessor}{$name};
+    return;
+}
+
+# clean up accessor
+sub clear_accessor
+{
+    my ($self, $name) = @_;
+    my $class = (ref $self) ? (ref $self) : $self; 
+    if (exists $self->{config}{accessor}{$name}) {
+        my $method_name = $class."::".$name;
+        ## no critic (TestingAndDebugging::ProhibitNoStrict)
+        no strict 'refs';
+        undef *{$method_name};
+        delete $self->{config}{accessor}{$name};
+    }
+    return;
+}
+
+# clear instance for exit-cleanup or for re-use in testing
+sub clear_instance
+{
+    if (defined $_instance) {
+        # clear accessor functions
+        foreach my $acc (keys %{$_instance->{config}{accessor}}) {
+            $_instance->clear_accessor($acc);
+        }
+
+        # dereferencing will destroy singleton instance
+        undef $_instance;
+    }
+    return;
+}
+
+# call destructor when program ends
+END {
+    Sys::OsRelease::clear_instance();
 }
 
 1;
