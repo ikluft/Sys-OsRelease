@@ -21,7 +21,7 @@ use Carp qw(carp croak);
 my $_instance;
 
 # default search path for os-release file
-my @std_osr_path = qw(/etc /usr/lib /run/host);
+my @std_search_path = qw(/etc /usr/lib /run/host);
 
 # defined attributes from FreeDesktop's os-release standard - this needs to be kept up-to-date with the standard
 my @std_attrs = qw(NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME
@@ -35,12 +35,20 @@ sub fold_case
     my $str = shift;
 
     # use fc if available, otherwise lc to support older Perls
-    return $can_fc ?  CORE::fc($str) : lc($str);
+    return $can_fc ?  $can_fc->($str) : lc($str);
 }
 
 # access module data
-sub std_osr_path { return @std_osr_path; }
+sub std_search_path { return @std_search_path; }
 sub std_attrs { return @std_attrs; }
+
+# alternative method to initiate initialization without returning a value
+sub init
+{
+    my ($class, @params) = @_;
+    $class->instance(@params);
+    return;
+}
 
 # new method calls instance
 sub new
@@ -90,7 +98,7 @@ sub _new_instance
 
     # locate os-release file in standard places
     my $osrelease_path;
-    my @search_path = ((exists $obj{config}{osr_path}) ? @{$obj{config}{osr_path}} : @std_osr_path);
+    my @search_path = ((exists $obj{config}{search_path}) ? @{$obj{config}{search_path}} : @std_search_path);
     foreach my $search_dir (@search_path) {
         if (-r "$search_dir/os-release") {
             $osrelease_path = $search_dir."/os-release";
@@ -130,12 +138,12 @@ sub _new_instance
     }
     ## use critic (InputOutput::RequireBriefOpen)
 
-    # generate accessor methods
-    my $obj = bless \%obj, $class;
-    $obj->gen_accessors();
+    # bless instance and generate accessor methods
+    my $obj_ref = bless \%obj, $class;
+    $obj_ref->gen_accessors();
 
     # instantiate object
-    return $obj;
+    return $obj_ref;
 }
 
 # call destructor when program ends
@@ -144,8 +152,28 @@ END {
     undef $_instance;
 }
 
+# attribute existence checker
+sub has_attr
+{
+    my ($self, $key) = @_;
+    return exists $self->{fold_case($key)};
+}
+
+# attribute read-only accessor
+sub get
+{
+    my ($self, $key) = @_;
+    return $self->{fold_case($key)} // undef;
+}
+
+# attribute existence checker
+sub has_config
+{
+    my ($self, $key) = @_;
+    return exists $self->{config}{$key};
+}
+
 # config read/write accessor
-# second purpose of this method: name matching %{$self->{config}} protects it from AUTOLOAD interference
 sub config
 {
     my ($self, $key, $value) = @_;
@@ -175,7 +203,7 @@ sub gen_accessors
     foreach my $std_attr (@std_attrs) {
         next if $std_attr eq "config"; # protect special/reserved attribute
         my $fc_attr = fold_case($std_attr);
-        next if exists $self->{$fc_attr};
+        next if $self->has_attr($fc_attr);
 
         my $method_name = $class."::".$fc_attr;
         ## no critic (TestingAndDebugging::ProhibitNoStrict)
@@ -198,9 +226,15 @@ Sys::OsRelease - read operating system details from FreeDesktop.Org standard /et
 
 =head1 SYNOPSIS
 
-my $osrelease = Sys::OsRelease->instance();
-my $id = $osrelease->id();
-my $id_like = $osrelease->id_like();
+non-object-oriented:
+  Sys::OsRelease->init();
+  my $id = Sys::OsRelease->id();
+  my $id_like = Sys::OsRelease->id_like();
+
+object-oriented:
+  my $osrelease = Sys::OsRelease->instance();
+  my $id = $osrelease->id();
+  my $id_like = $osrelease->id_like();
 
 =head1 DESCRIPTION
 
