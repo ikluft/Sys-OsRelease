@@ -120,7 +120,7 @@ sub _new_instance
         while (my $line = <$fh>) {
             chomp $line; # remove trailing nl
             if (substr($line, -1, 1) eq "\r") {
-                substr($line, -1, 1) = ""; # remove trailing cr
+                $line = substr($line, 0, -1); # remove trailing cr
             }
 
             # skip comments and blank lines
@@ -135,8 +135,6 @@ sub _new_instance
             {
                 next if $1 eq "config"; # don't overwrite config
                 $obj{fold_case($1)} = $2;
-            } else {
-                carp "warning: unable to parse line from $osrelease_path: $_";
             }
         }
         close $fh;
