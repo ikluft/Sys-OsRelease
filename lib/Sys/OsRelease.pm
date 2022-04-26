@@ -20,8 +20,9 @@ use Carp qw(carp croak);
 # the instance - use Sys::OsRelease->instance() to get it
 my $_instance;
 
-# default search path for os-release file
+# default search path and file name for os-release file
 my @std_search_path = qw(/etc /usr/lib /run/host);
+my $std_file_name = "os-release";
 
 # defined attributes from FreeDesktop's os-release standard - this needs to be kept up-to-date with the standard
 my @std_attrs = qw(NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME
@@ -99,9 +100,10 @@ sub _new_instance
     # locate os-release file in standard places
     my $osrelease_path;
     my @search_path = ((exists $obj{config}{search_path}) ? @{$obj{config}{search_path}} : @std_search_path);
+    my $file_name = ((exists $obj{config}{file_name}) ? $obj{config}{file_name} : $std_file_name);
     foreach my $search_dir (@search_path) {
-        if (-r "$search_dir/os-release") {
-            $osrelease_path = $search_dir."/os-release";
+        if (-r "$search_dir/$file_name") {
+            $osrelease_path = $search_dir."/".$file_name;
             last;
         }
     }
@@ -115,18 +117,21 @@ sub _new_instance
     # read os-release file
     ## no critic (InputOutput::RequireBriefOpen)
     if (open my $fh, "<", $osrelease_path) {
-        while (<$fh>) {
-            chomp;
+        while (my $line = <$fh>) {
+            chomp $line; # remove trailing nl
+            if (substr($line, -1, 1) eq "\r") {
+                substr($line, -1, 1) = ""; # remove trailing cr
+            }
 
             # skip comments and blank lines
-            if (/^ \s+ #/x or /^ \s+ $/x) {
+            if ($line =~ /^ \s+ #/x or $line =~ /^ \s+ $/x) {
                 next;
             }
 
             # read attribute assignment lines
-            if (/^ ([A-Z0-9_]+) = "(.*)" $/x
-                or /^ ([A-Z0-9_]+) = '(.*)' $/x
-                or /^ ([A-Z0-9_]+) = (.*) $/x)
+            if ($line =~ /^ ([A-Z0-9_]+) = "(.*)" $/x
+                or $line =~ /^ ([A-Z0-9_]+) = '(.*)' $/x
+                or $line =~ /^ ([A-Z0-9_]+) = (.*) $/x)
             {
                 next if $1 eq "config"; # don't overwrite config
                 $obj{fold_case($1)} = $2;
