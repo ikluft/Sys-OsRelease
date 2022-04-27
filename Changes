@@ -4,8 +4,10 @@ Change log for Sys::OsRelease
  [API CHANGE]
 
  [BUG FIXES]
+ - fix from CPAN Testers results: on mswin32 init empty rather than bail out
 
  [DOCS]
+ - expand POD docs with method descriptions
 
  [ENHANCEMENTS]
 
@@ -14,6 +16,8 @@ Change log for Sys::OsRelease
  [MINOR]
 
  [REVISION]
+ - add platform method and configuration items to expand systems recognized as common in ID_LIKE
+ - add unit tests for empty configurations simulating systems where os-release doesn't exist (using empty search path)
 
  [SECURITY]
 
