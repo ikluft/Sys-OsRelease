@@ -150,16 +150,31 @@ sub _new_instance
 
     # bless instance and generate accessor methods
     my $obj_ref = bless \%obj, $class;
-    $obj_ref->gen_accessors();
+    $obj_ref->_gen_accessors();
 
     # instantiate object
     return $obj_ref;
 }
 
+# helper function to allow methods to get the instance ref when called via the class name
+sub class_or_obj
+{
+    my $coo = shift;
+
+    # enforce class lineage
+    if (not $coo->isa(__PACKAGE__)) {
+        croak "cannot find instance: ".(ref $coo ? ref $coo : $coo)." is not a ".__PACKAGE__;
+    }
+
+    # return the instance
+    return ((ref $coo) ? $coo : $coo->instance());
+}
+
 # determine platform type
 sub platform
 {
-    my $self = shift;
+    my ($class_or_obj) = @_;
+    my $self = class_or_obj($class_or_obj);
     
     # if we haven't already saved this result, compute and save it
     if (not $self->has_config("platform")) {
@@ -197,7 +212,8 @@ sub platform
 # return undef if the file was not found
 sub osrelease_path
 {
-    my $self = shift;
+    my ($class_or_obj) = @_;
+    my $self = class_or_obj($class_or_obj);
     if (exists $self->{_config}{osrelease_path}) {
         return $self->{_config}{osrelease_path};
     }
@@ -213,28 +229,32 @@ sub defined_instance
 # attribute existence checker
 sub has_attr
 {
-    my ($self, $key) = @_;
+    my ($class_or_obj, $key) = @_;
+    my $self = class_or_obj($class_or_obj);
     return ((exists $self->{fold_case($key)}) ? 1 : 0);
 }
 
 # attribute read-only accessor
 sub get
 {
-    my ($self, $key) = @_;
+    my ($class_or_obj, $key) = @_;
+    my $self = class_or_obj($class_or_obj);
     return $self->{fold_case($key)} // undef;
 }
 
 # attribute existence checker
 sub has_config
 {
-    my ($self, $key) = @_;
+    my ($class_or_obj, $key) = @_;
+    my $self = class_or_obj($class_or_obj);
     return ((exists $self->{_config}{$key}) ? 1 : 0);
 }
 
 # config read/write accessor
 sub config
 {
-    my ($self, $key, $value) = @_;
+    my ($class_or_obj, $key, $value) = @_;
+    my $self = class_or_obj($class_or_obj);
     if (defined $value) {
         $self->{_config}{$key} = $value;
     }
@@ -242,14 +262,16 @@ sub config
 }
 
 # generate accessor methods for all defined and standardized attributes
-sub gen_accessors
+# private internal method
+sub _gen_accessors
 {
-    my $self = shift;
+    my ($class_or_obj) = @_;
+    my $self = class_or_obj($class_or_obj);
 
     # generate read-only accessors for attributes actually found in os-release
     foreach my $key (sort keys %{$self}) {
         next if $key eq "_config"; # protect special/reserved attribute
-        $self->gen_accessor($key);
+        $self->_gen_accessor($key);
     }
 
     # generate undef accessors for standardized attributes which were not found in os-release
@@ -257,15 +279,17 @@ sub gen_accessors
         next if $std_attr eq "_config"; # protect special/reserved attribute
         my $fc_attr = fold_case($std_attr);
         next if $self->has_attr($fc_attr);
-        $self->gen_accessor($fc_attr);
+        $self->_gen_accessor($fc_attr);
     }
     return;
 }
 
 # generate accessor
-sub gen_accessor
+# private internal method
+sub _gen_accessor
 {
-    my ($self, $name) = @_;
+    my ($class_or_obj, $name) = @_;
+    my $self = class_or_obj($class_or_obj);
     my $class = (ref $self) ? (ref $self) : $self; 
     my $method_name = $class."::".$name;
 
@@ -290,9 +314,11 @@ sub gen_accessor
 }
 
 # clean up accessor
-sub clear_accessor
+# private internal method
+sub _clear_accessor
 {
-    my ($self, $name) = @_;
+    my ($class_or_obj, $name) = @_;
+    my $self = class_or_obj($class_or_obj);
     my $class = (ref $self) ? (ref $self) : $self; 
     if (exists $self->{_config}{accessor}{$name}) {
         my $method_name = $class."::".$name;
@@ -310,7 +336,7 @@ sub clear_instance
     if (defined $_instance) {
         # clear accessor functions
         foreach my $acc (keys %{$_instance->{_config}{accessor}}) {
-            $_instance->clear_accessor($acc);
+            $_instance->_clear_accessor($acc);
         }
 
         # dereferencing will destroy singleton instance
