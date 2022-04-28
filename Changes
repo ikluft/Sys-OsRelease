@@ -14,6 +14,7 @@ Change log for Sys::OsRelease
  [MINOR]
 
  [REVISION]
+ - based on CPAN Testers feedback, remove occurrences of // operator which did not exist prior to Perl 5.10 (in keeping with module's minimal prerequisites)
 
  [SECURITY]
 

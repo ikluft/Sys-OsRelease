@@ -193,7 +193,7 @@ sub platform
 
             # check ID_LIKE for more common names which should be used instead of ID
             foreach my $like (split /\s+/x, $self->id_like) {
-                if ($common_id{$like} // 0) {
+                if (exists $common_id{$like}) {
                     $self->config("platform", $like);
                     last;
                 }
@@ -239,7 +239,7 @@ sub get
 {
     my ($class_or_obj, $key) = @_;
     my $self = class_or_obj($class_or_obj);
-    return $self->{fold_case($key)} // undef;
+    return $self->{fold_case($key)};
 }
 
 # attribute existence checker
@@ -301,7 +301,7 @@ sub _gen_accessor
     # generate accessor as read-only or undef depending whether it exists in the running system
     if (exists $self->{$name}) {
         # generate read-only accessor for attribute which was found in os-release
-        $self->{_config}{accessor}{$name} = sub { return $self->{$name} // undef };
+        $self->{_config}{accessor}{$name} = sub { return $self->{$name} };
     } else {
         # generate undef accessor for standard attribute which was not found in os-release
         $self->{_config}{accessor}{$name} = sub { return; };
