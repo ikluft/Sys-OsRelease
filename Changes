@@ -4,7 +4,6 @@ Change log for Sys::OsRelease
  [API CHANGE]
 
  [BUG FIXES]
- - all methods now correctly handle being called via class name in addition to instance reference
 
  [DOCS]
 
@@ -13,12 +12,18 @@ Change log for Sys::OsRelease
  [MAJOR]
 
  [MINOR]
- - prefixed "_" on private internal method names
 
  [REVISION]
- - added tests for method calls from the class name in addition to object reference
 
  [SECURITY]
+
+0.1.0 2022-04-27T14:47:00 America/Los_Angeles
+ [BUG FIXES]
+ - all methods now correctly handle being called via class name in addition to instance reference
+ [MINOR]
+ - prefixed "_" on private internal method names
+ [REVISION]
+ - added tests for method calls from the class name in addition to object reference
 
 0.0.2 2022-04-26T23:22:00 America/Los_Angeles
  [BUG FIXES]
