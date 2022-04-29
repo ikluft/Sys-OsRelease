@@ -20,7 +20,7 @@ plan tests => (22 + 3 * scalar @std_attrs);
 
 {
     # instantiation (3 tests)
-    is(Sys::OsRelease::defined_instance(), 0, "instance undefined before initialization");
+    is(Sys::OsRelease->defined_instance(), 0, "instance undefined before initialization");
     my $osrelease = Sys::OsRelease->instance();
     isa_ok($osrelease, "Sys::OsRelease", "correct type from instance()");
     my $osrelease2 = Sys::OsRelease->instance();
@@ -69,13 +69,13 @@ plan tests => (22 + 3 * scalar @std_attrs);
 }
 
 # clear instance (2 tests)
-Sys::OsRelease::clear_instance();
-is(Sys::OsRelease::defined_instance(), 0, "cleared: instance undefined after clear_instance()");
+Sys::OsRelease->clear_instance();
+is(Sys::OsRelease->defined_instance(), 0, "cleared: instance undefined after clear_instance()");
 my $osrelease3 = Sys::OsRelease->instance();
 isa_ok($osrelease3, "Sys::OsRelease", "cleared: instance set again by instance()");
 
 # test for empty object if os-release file wasn't found - set empty search path to force test (6+std_attrs tests)
-Sys::OsRelease::clear_instance();
+Sys::OsRelease->clear_instance();
 foreach my $attr (map {lc $_} @std_attrs) {
     ok((Sys::OsRelease->can($attr))?0:1, "empty: $attr() method does not exist");
 }

@@ -19,7 +19,7 @@ use Config;
 use Carp qw(carp croak);
 
 # the instance - use Sys::OsRelease->instance() to get it
-my $_instance;
+my %_instances = ();
 
 # default search path and file name for os-release file
 my @std_search_path = qw(/etc /usr/lib /run/host);
@@ -36,19 +36,20 @@ my %common_id = (
     debian => 1,
 );
 
-# fold case for case-insensitive matching
-my $can_fc = CORE->can("fc"); # test fc() once and save result
-sub fold_case
-{
-    my $str = shift;
-
-    # use fc if available, otherwise lc to support older Perls
-    return $can_fc ?  $can_fc->($str) : lc($str);
+# call destructor when program ends
+END {
+    foreach my $class (keys %_instances) {
+        $class->clear_instance();
+    }
+    undef %_instances;
 }
 
-# access module data
-sub std_search_path { return @std_search_path; }
-sub std_attrs { return @std_attrs; }
+#
+# singleton management methods
+# These can be imported by another class by using the import_singleton() method. That was done for Sys::OsPackage,
+# to avoid copying those methods.  But other classes with a similar need to minimize module dependencies which already
+# use Sys::OsRelease can do this too.
+#
 
 # alternative method to initiate initialization without returning a value
 sub init
@@ -70,18 +71,70 @@ sub instance
 {
     my ($class, @params) = @_;
 
-    # enforce class lineage
-    if (not $class->isa(__PACKAGE__)) {
-        croak "cannot find instance: ".(ref $class ? ref $class : $class)." is not a ".__PACKAGE__;
-    }
-
     # initialize if not already done
-    if (not defined $_instance) {
-        $_instance = $class->_new_instance(@params);
+    if (not defined $_instances{$class}) {
+        $_instances{$class} = $class->_new_instance(@params);
     }
 
     # return singleton instance
-    return $_instance;
+    return $_instances{$class};
+}
+
+# test if instance is defined for testing
+sub defined_instance
+{
+    my $class = shift;
+    return ((defined $_instances{$class}) and $_instances{$class}->isa($class)) ? 1 : 0;
+}
+
+# clear instance for exit-cleanup or for re-use in testing
+sub clear_instance
+{
+    my $class = shift;
+    if ($class->defined_instance()) {
+        # clean up anything that the destructor will miss, such as auto-generated methods
+        if ($class->can("_cleanup_instance")) {
+            $class->_cleanup_instance();
+        }
+
+        # dereferencing will destroy singleton instance
+        undef $_instances{$class};
+    }
+    return;
+}
+
+# allow other classes which cooperate with Sys::OsRelease to import our singleton-management methods
+# This helps maintain minimal prerequisites among modules working to set up Perl on containers or new systems.
+sub import_singleton
+{
+    my $class = shift;
+    my $caller_class = caller;
+
+    # export singleton-management methods to caller class
+    foreach my $method_name (qw(init new instance defined_instance clear_instance)) {
+        ## no critic (TestingAndDebugging::ProhibitNoStrict)
+        no strict 'refs';
+        *{$caller_class."::".$method_name} = \&{__PACKAGE__."::".$method_name};
+    }
+    return;
+}
+
+#
+# os-release data access methods
+#
+
+# access module constants
+sub std_search_path { return @std_search_path; }
+sub std_attrs { return @std_attrs; }
+
+# fold case for case-insensitive matching
+my $can_fc = CORE->can("fc"); # test fc() once and save result
+sub fold_case
+{
+    my $str = shift;
+
+    # use fc if available, otherwise lc to support older Perls
+    return $can_fc ?  $can_fc->($str) : lc($str);
 }
 
 # initialize a new instance
@@ -89,9 +142,10 @@ sub _new_instance
 {
     my ($class, @params) = @_;
 
-    # enforce class lineage
+    # enforce class lineage - _new_instance() should be overloaded by other classes that import singleton methods
     if (not $class->isa(__PACKAGE__)) {
-        croak "cannot find instance: ".(ref $class ? ref $class : $class)." is not a ".__PACKAGE__;
+        croak "_new_instance() should be overloaded by calling class: "
+            .(ref $class ? ref $class : $class)." is not a ".__PACKAGE__;
     }
 
     # obtain parameters from array or hashref
@@ -161,13 +215,27 @@ sub class_or_obj
 {
     my $coo = shift;
 
-    # enforce class lineage
-    if (not $coo->isa(__PACKAGE__)) {
-        croak "cannot find instance: ".(ref $coo ? ref $coo : $coo)." is not a ".__PACKAGE__;
-    }
-
     # return the instance
     return ((ref $coo) ? $coo : $coo->instance());
+}
+
+# clean up data in an instance before feeding it to the destructor
+sub _cleanup_instance
+{
+    my ($class_or_obj) = @_;
+    my $self = class_or_obj($class_or_obj);
+
+    # enforce class lineage - _cleanup_instance() should be overloaded by other classes that import singleton methods
+    if (not $self->isa(__PACKAGE__)) {
+        croak "_new_instance() should be overloaded by calling class: "
+            .(ef $self)." is not a ".__PACKAGE__;
+    }
+
+    # clear accessor functions
+    foreach my $acc (keys %{$self->{_config}{accessor}}) {
+        $self->_clear_accessor($acc);
+    }
+    return;
 }
 
 # determine platform type
@@ -218,12 +286,6 @@ sub osrelease_path
         return $self->{_config}{osrelease_path};
     }
     return;
-}
-
-# test if instance is defined for testing
-sub defined_instance
-{
-    return ((defined $_instance) and $_instance->isa(__PACKAGE__)) ? 1 : 0;
 }
 
 # attribute existence checker
@@ -328,26 +390,6 @@ sub _clear_accessor
         delete $self->{_config}{accessor}{$name};
     }
     return;
-}
-
-# clear instance for exit-cleanup or for re-use in testing
-sub clear_instance
-{
-    if (defined $_instance) {
-        # clear accessor functions
-        foreach my $acc (keys %{$_instance->{_config}{accessor}}) {
-            $_instance->_clear_accessor($acc);
-        }
-
-        # dereferencing will destroy singleton instance
-        undef $_instance;
-    }
-    return;
-}
-
-# call destructor when program ends
-END {
-    Sys::OsRelease::clear_instance();
 }
 
 1;
@@ -515,6 +557,15 @@ different parameters.
 
 Since this class is based on the singleton model, there is only one instance.
 The instance(), new() and init() methods will only initialize the instance if it is not already initialized.
+
+=item  import_singleton
+
+The singleton-management methods I<init>, I<new>, I<instance>, I<defined_instance> and I<clear_instance>
+can be imported by another class by using the import_singleton() method.
+That was done for L<Sys::OsPackage>, to allow it to avoid copying those methods.
+But other classes with a similar need to minimize module dependencies which already
+use I<Sys::OsRelease> can do this too.
+This helps maintain minimal prerequisites among modules working to set up Perl on containers or new systems.
 
 =back
 
