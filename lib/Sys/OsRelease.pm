@@ -575,6 +575,14 @@ FreeDesktop.Org's os-release standard: L<https://www.freedesktop.org/software/sy
 
 GitHub repository for Sys::OsRelease: L<https://github.com/ikluft/Sys-OsRelease>
 
+Related modules:
+
+=over 1
+
+=item L<System::Info> - system information collected from multiple sources
+
+=back
+
 =head1 BUGS AND LIMITATIONS
 
 Please report bugs via GitHub at L<https://github.com/ikluft/Sys-OsRelease/issues>
