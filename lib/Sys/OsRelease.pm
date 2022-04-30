@@ -7,7 +7,7 @@
 # This module must be maintained for minimal dependencies so it can be used to build systems and containers.
 
 ## no critic (Modules::RequireExplicitPackage)
-# This solves a catch-22 where conflicting Perl::Critic rules want package and strictures each before the other
+# This resolves conflicting Perl::Critic rules which want package and strictures each before the other
 use strict;
 use warnings;
 use utf8;

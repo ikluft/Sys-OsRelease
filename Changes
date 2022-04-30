@@ -8,15 +8,19 @@ Change log for Sys::OsRelease
  [DOCS]
 
  [ENHANCEMENTS]
- - add import_singleton() so new module Sys::OsPackage can import rather than copy the singleton-management methods
 
  [MAJOR]
 
  [MINOR]
 
  [REVISION]
+ - update tests for sample os-release from opensuse/leap
 
  [SECURITY]
+
+0.2.0 2022-04-28T22:58:00 America/Los_Angeles
+ [ENHANCEMENTS]
+ - add import_singleton() so new module Sys::OsPackage can import rather than copy the singleton-management methods
 
 0.1.1 2022-04-28T16:04:09 America/Los_Angeles
  [REVISION]

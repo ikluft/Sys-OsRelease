@@ -1,2 +1,6 @@
+# usage: gen-sample imagename
+# where imagename is a container image name loadable from podman
+# suggested image names to use (one at a time): almalinux alpine archlinux debian fedora rockylinux ubuntu
 name=$1
-podman run --tty $name:latest cat /etc/os-release > os-release-$name
+filename=os-release-$(echo $name | sed 's/[/][/]*/-/')
+podman run --tty $name:latest cat /etc/os-release | sed 's/\r$//' > $filename
