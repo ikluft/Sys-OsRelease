@@ -6,6 +6,7 @@ Change log for Sys::OsRelease
  [BUG FIXES]
 
  [DOCS]
+ - add reciprocal see-also link to System::Info
 
  [ENHANCEMENTS]
 
@@ -15,6 +16,7 @@ Change log for Sys::OsRelease
 
  [REVISION]
  - update tests for sample os-release from opensuse/leap
+ - add basic tests for import of singleton-management methods (just check if they landed)
 
  [SECURITY]
 
