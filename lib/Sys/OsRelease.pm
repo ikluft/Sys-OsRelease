@@ -72,7 +72,7 @@ sub instance
     my ($class, @params) = @_;
 
     # initialize if not already done
-    if (not defined $_instances{$class}) {
+    if (not $class->defined_instance()) {
         $_instances{$class} = $class->_new_instance(@params);
     }
 
@@ -84,7 +84,7 @@ sub instance
 sub defined_instance
 {
     my $class = shift;
-    return ((defined $_instances{$class}) and $_instances{$class}->isa($class)) ? 1 : 0;
+    return ((exists $_instances{$class}) and $_instances{$class}->isa($class)) ? 1 : 0;
 }
 
 # clear instance for exit-cleanup or for re-use in testing
@@ -98,7 +98,7 @@ sub clear_instance
         }
 
         # dereferencing will destroy singleton instance
-        undef $_instances{$class};
+        delete $_instances{$class};
     }
     return;
 }
