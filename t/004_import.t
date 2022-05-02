@@ -8,11 +8,10 @@
 use strict;
 use warnings;
 use Sys::OsRelease;
-use Readonly;
 use Test::More;
 
 # configuration
-Readonly::Array my @import_methods => qw(init new instance defined_instance clear_instance);
+my @import_methods = qw(init new instance defined_instance clear_instance);
 plan tests => 3 * scalar @import_methods;
 
 # pre-import tests: functions should not exist
