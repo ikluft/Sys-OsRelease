@@ -15,6 +15,7 @@ Change log for Sys::OsRelease
  [MINOR]
 
  [REVISION]
+ - add more Open Source community distros recongized as common
  - update tests for sample os-release from opensuse/leap
  - add basic tests for import of singleton-management methods (just check if they landed)
 
