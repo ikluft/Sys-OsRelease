@@ -32,8 +32,11 @@ my @std_attrs = qw(NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSI
 
 # OS ID strings which are preferred as common if found in ID_LIKE
 my %common_id = (
+    alpine => 1,
+    arch => 1,
     fedora => 1,
     debian => 1,
+    opensuse => 1,
 );
 
 # call destructor when program ends
