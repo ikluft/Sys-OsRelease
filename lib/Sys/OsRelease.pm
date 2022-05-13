@@ -423,8 +423,8 @@ object-oriented:
 =head1 DESCRIPTION
 
 Sys::OsRelease is a helper library to read the /etc/os-release file, as defined by FreeDesktop.Org.
-The os-release file is used to define an operating system environment,
-in widespread use among Linux distributions since 2017 and BSD variants since 2020.
+The os-release file is used to define an operating system environment.
+It has been in widespread use among Linux distributions since 2017 and BSD variants since 2020.
 It was started on Linux systems which use the systemd software, but then spread to other Linux, BSD and
 Unix-based systems.
 Its purpose is to identify the system to any software which needs to know.
@@ -436,7 +436,7 @@ The first time it's called, it instantiates it.
 On following calls, it returns a reference to the singleton instance.
 
 This module maintains minimal prerequisites, and only those which are usually included with Perl.
-(Suggestions of new features and code will largely depend on following this rule.)
+(Suggestions of new features and code will have to follow this rule.)
 That is intended to be acceptable for establishing system or container environments which contain Perl programs.
 It can also be used for installing or configuring software that needs to know about the system environment.
 
@@ -449,9 +449,8 @@ Current attributes recognized by Sys::OsRelease are:
     IMAGE_VERSION HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL PRIVACY_POLICY_URL LOGO ANSI_COLOR
     DEFAULT_HOSTNAME SYSEXT_LEVEL
 
-If other attributes are found in the os-release file, they will be honored.
+If other attributes are found in the os-release file, they will be accepted.
 Folded to lower case, the attribute names are used as keys in an internal hash structure.
-
 
 =head1 METHODS
 
@@ -582,7 +581,14 @@ Related modules:
 
 =over 1
 
-=item L<System::Info> - system information collected from multiple sources
+=item L<Sys::OsPackage>
+
+installs Perl modules, for example as dependencies of a script, via OS packages if available or otherwise via CPAN -
+uses Sys::OsRelease to determine OS type
+
+=item L<System::Info>
+
+system information collected from multiple sources including system architecture, hardware, OS release data
 
 =back
 
