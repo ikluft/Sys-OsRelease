@@ -15,6 +15,8 @@ Change log for Sys::OsRelease
  [MINOR]
 
  [REVISION]
+ - add Dist::Zilla plugin Test::UnusedVars and fix one function which it flagged
+ - update t/test-inputs/003_samples/gen-sample to regenerate sample data from all distros if no arguments
  - add more Open Source community distros recongized as common
  - update tests for sample os-release from opensuse/leap
  - add basic tests for import of singleton-management methods (just check if they landed)

@@ -117,7 +117,7 @@ sub import_singleton
     foreach my $method_name (qw(init new instance defined_instance clear_instance)) {
         ## no critic (TestingAndDebugging::ProhibitNoStrict)
         no strict 'refs';
-        *{$caller_class."::".$method_name} = \&{__PACKAGE__."::".$method_name};
+        *{$caller_class."::".$method_name} = \&{$class."::".$method_name};
     }
     return;
 }
