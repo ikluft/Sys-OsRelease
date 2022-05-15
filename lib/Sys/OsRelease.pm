@@ -402,10 +402,6 @@ __END__
 # POD documentation
 =encoding utf8
 
-=head1 NAME
-
-Sys::OsRelease - read operating system details from standard /etc/os-release file
-
 =head1 SYNOPSIS
 
 non-object-oriented:
