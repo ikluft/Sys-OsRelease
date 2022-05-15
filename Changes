@@ -6,7 +6,7 @@ Change log for Sys::OsRelease
  [BUG FIXES]
 
  [DOCS]
- - minor updates to POD docs
+ - remove NAME section from source POD. I didn't notice until now that Pod::Weaver was adding a duplicate.
 
  [ENHANCEMENTS]
 
@@ -17,6 +17,12 @@ Change log for Sys::OsRelease
  [REVISION]
 
  [SECURITY]
+
+0.2.2 2022-05-13T15:49:53-07:00 America/Los_Angeles
+ [DOCS]
+ - minor updates to POD docs
+ [REVISION]
+ - build updates
 
 0.2.1 2022-05-12T23:39:12-07:00 America/Los_Angeles
  [DOCS]
