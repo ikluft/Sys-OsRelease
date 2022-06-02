@@ -1,5 +1,5 @@
 ---
-count: 301
+count: 336
 files:
   os-release-almalinux:
     almalinux_mantisbt_project: AlmaLinux-8
@@ -66,6 +66,18 @@ files:
     version: 35 (Container Image)
     version_codename: ''
     version_id: 35
+  os-release-kalilinux-kali-last-release:
+    ansi_color: 1;31
+    bug_report_url: https://bugs.kali.org/
+    home_url: https://www.kali.org/
+    id: kali
+    id_like: debian
+    name: Kali GNU/Linux
+    pretty_name: Kali GNU/Linux Rolling
+    support_url: https://forums.kali.org/
+    version: 2022.2
+    version_codename: kali-rolling
+    version_id: 2022.2
   os-release-opensuse-leap:
     ansi_color: 0;32
     bug_report_url: https://bugs.opensuse.org
