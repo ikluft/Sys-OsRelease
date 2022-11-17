@@ -1,8 +1,14 @@
 # Sys-OsRelease
-
+[![Perl](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-main.yml/badge.svg)](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-main.yml)
 helper library in Perl for reading OS info from FreeDesktop.Org-standard /etc/os-release file
 
-## NAME
+# Presentations
+
+November 3, 2022 at Silicon Valley Perl: [slides](/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf) (PDF)
+
+<a href="/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf"><img src="/ikluft/Sys-OsPackage/blob/main/doc/slide1-screenshot-scaled.png"/></a>
+
+# Sys::OsRelease module documentation
 
 Sys::OsRelease - read operating system details from standard /etc/os-release file
 
