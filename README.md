@@ -5,9 +5,9 @@ helper library in Perl for reading OS info from FreeDesktop.Org-standard /etc/os
 
 # Presentations
 
-November 3, 2022 at Silicon Valley Perl: [slides](/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf) (PDF)
+November 3, 2022 at Silicon Valley Perl: [slides](https://github.com/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf) (PDF)
 
-<a href="/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf"><img src="/ikluft/Sys-OsPackage/raw/main/doc/slide1-screenshot-scaled.png"/></a>
+<a href="https://github.com/ikluft/Sys-OsPackage/blob/main/doc/pres-2022-11-sys-ospackage.pdf"><img src="https://github.com/ikluft/Sys-OsPackage/raw/main/doc/slide1-screenshot-scaled.png"/></a>
 
 # Sys::OsRelease module documentation
 
