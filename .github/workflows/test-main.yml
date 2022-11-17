@@ -37,7 +37,6 @@ jobs:
           dzil --version
       - name: Install Modules
         run: |
-          cd main
           dzil authordeps --missing | cpanm --notest
           dzil listdeps --develop --missing | cpanm --notest
       - name: Show Errors on Windows
@@ -56,5 +55,4 @@ jobs:
            cat  /Users/runner/.cpanm/work/*/build.log
       - name: Run tests
         run: |
-          cd main
           dzil test --release
