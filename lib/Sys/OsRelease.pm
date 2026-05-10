@@ -15,6 +15,13 @@ use utf8;
 
 package Sys::OsRelease;
 
+BEGIN {
+    use version;
+    if ( $^V >= version->declare("v5.16.0")) {
+        use feature qw(fc);
+    }
+}
+use feature qw(say);
 use Config;
 use Carp qw(carp croak);
 
@@ -27,8 +34,10 @@ my $std_file_name = "os-release";
 
 # defined attributes from FreeDesktop's os-release standard - this needs to be kept up-to-date with the standard
 my @std_attrs = qw(NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME
-    BUILD_ID IMAGE_ID IMAGE_VERSION HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL PRIVACY_POLICY_URL
-    LOGO ANSI_COLOR DEFAULT_HOSTNAME SYSEXT_LEVEL);
+    BUILD_ID IMAGE_ID IMAGE_VERSION RELEASE_TYPE HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL
+    PRIVACY_POLICY_URL SUPPORT_END LOGO ANSI_COLOR ANSI_COLOR_REVERSE VENDOR_NAME VENDOR_URL EXPERIMENT
+    EXPERIMENT_URL DEFAULT_HOSTNAME ARCHITECTURE SYSEXT_LEVEL CONFEXT_LEVEL SYSEXT_SCOPE CONFEXT_SCOPE
+    PORTABLE_PREFIXES PORTABLE_SCOPE);
 
 # OS ID strings which are preferred as common if found in ID_LIKE
 my %common_id = (
@@ -532,17 +541,6 @@ This helps maintain minimal prerequisites among modules working to set up Perl o
 
 =back
 
-=head2 Auto-generated Accessor Methods
-
-For convenience, I<Sys::OsRelease> generates read-only accessor methods for each of the standard 
-attribute names, converted to lower case. For example, from the list above they are I<name()>, I<id()>,
-I<id_like()>, etc. The auto-generated methods do not require any parameters, and ignore any if provided.
-
-Accessor methods are not generated for non-standard atttributes because it would be unreliable to try to
-call methods named for transient data that may or may not exist on a given platform, and for the possibility
-they could conflict with existing functions in the I<Sys::OsRelease> namespace.  Use the I<found_attrs()>,
-I<has_attr()> and I<get()> methods to detect and access non-standard attributes.
-
 =head2 Instance methods
 
 Object methods, including auto-generated accessors described above, access the data from the singleton instance,
@@ -602,6 +600,95 @@ returns a boolean which is true if Sys::OsRelease contains a configuration setti
 is a read/write accessor for the configuration setting named by the string parameter "name".
 If no value parameter is provided, it returns the value of the parameter, or undef if it doesn't exist.
 If a value parameter is provided, it assigns that to the configuration setting and returns the same value.
+
+=back
+
+=head2 Auto-generated Accessor Methods
+
+For convenience, I<Sys::OsRelease> generates read-only accessor methods for each of the standard 
+attribute names, converted to lower case. For example, from the list above they are I<name()>, I<id()>,
+I<id_like()>, etc. The auto-generated methods do not require any parameters, and ignore any if provided.
+
+Accessor methods are not generated for non-standard atttributes because it would be unreliable to try to
+call methods named for transient data that may or may not exist on a given platform, and for the possibility
+they could conflict with existing functions in the I<Sys::OsRelease> namespace.  Use the I<found_attrs()>,
+I<has_attr()> and I<get()> methods to detect and access non-standard attributes.
+
+The current full list is at the os-release standard
+L<https://www.freedesktop.org/software/systemd/man/latest/os-release.html>
+which includes descriptions of each attribute.
+
+=over 1
+
+=item name()
+
+=item id()
+
+=item id_like()
+
+=item pretty_name()
+
+=item cpe_name()
+
+=item variant()
+
+=item variant_id()
+
+=item version()
+
+=item version_id()
+
+=item version_codename()
+
+=item build_id()
+
+=item image_id()
+
+=item image_version()
+
+=item release_type()
+
+=item home_url()
+
+=item documentation_url()
+
+=item support_url()
+
+=item bug_report_url()
+
+=item privacy_policy_url()
+
+=item support_end()
+
+=item logo()
+
+=item ansi_color()
+
+=item ansi_color_reverse()
+
+=item vendor_name()
+
+=item vendor_url()
+
+=item experiment()
+
+=item experiment_url()
+
+=item default_hostname()
+
+=item architecture()
+
+=item sysext_level()
+
+=item confext_level()
+
+=item sysext_scope()
+
+=item confext_scope()
+
+=item portable_prefixes()
+
+=item portable_scope()
 
 =back
 

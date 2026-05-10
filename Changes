@@ -12,9 +12,13 @@ Change log for Sys::OsRelease
  [MAJOR]
 
  [MINOR]
+- bump minimum Perl version from 5.6 (2000) to 5.10 (2007) to use the version module
 
  [REVISION]
  - add test data for Kali Linux
+ - update Dist::Zilla config to remove git-related metadata conflict (forwarded from WebFetch)
+ - catch up with attributes added to os-release standard since 2022 (from systemd 231 to 260)
+ - enumerate documentation of auto-generated methods from Freedesktop standard
 
  [SECURITY]
 
