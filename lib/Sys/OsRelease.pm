@@ -1,6 +1,6 @@
 # Sys::OsRelease
 # ABSTRACT: read operating system details from standard /etc/os-release file
-# Copyright (c) 2022 by Ian Kluft
+# Copyright (c) 2022-2026 by Ian Kluft
 # Open Source license Perl's Artistic License 2.0: <http://www.perlfoundation.org/artistic_license_2_0>
 # SPDX-License-Identifier: Artistic-2.0
 
@@ -453,9 +453,11 @@ It can also be used for installing or configuring software that needs to know ab
 FreeDesktop.Org's os-release standard is at L<https://www.freedesktop.org/software/systemd/man/os-release.html>.
 
 Current attributes recognized by Sys::OsRelease are:
-    NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME BUILD_ID IMAGE_ID
-    IMAGE_VERSION HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL PRIVACY_POLICY_URL LOGO ANSI_COLOR
-    DEFAULT_HOSTNAME SYSEXT_LEVEL
+    NAME ID ID_LIKE PRETTY_NAME CPE_NAME VARIANT VARIANT_ID VERSION VERSION_ID VERSION_CODENAME
+    BUILD_ID IMAGE_ID IMAGE_VERSION RELEASE_TYPE HOME_URL DOCUMENTATION_URL SUPPORT_URL BUG_REPORT_URL
+    PRIVACY_POLICY_URL SUPPORT_END LOGO ANSI_COLOR ANSI_COLOR_REVERSE VENDOR_NAME VENDOR_URL EXPERIMENT
+    EXPERIMENT_URL DEFAULT_HOSTNAME ARCHITECTURE SYSEXT_LEVEL CONFEXT_LEVEL SYSEXT_SCOPE CONFEXT_SCOPE
+    PORTABLE_PREFIXES PORTABLE_SCOPE
 
 If other attributes are found in the os-release file, they will be accepted.
 Folded to lower case, the attribute names are used as keys in an internal hash structure.
@@ -720,7 +722,5 @@ Please report bugs via GitHub at L<https://github.com/ikluft/Sys-OsRelease/issue
 Patches and enhancements may be submitted via a pull request at L<https://github.com/ikluft/Sys-OsRelease/pulls>
 
 =head1 LICENSE INFORMATION
-
-Copyright (c) 2022 by Ian Kluft
 
 This module is distributed in the hope that it will be useful, but it is provided “as is” and without any express or implied warranties. For details, see the full text of the license in the file LICENSE or at L<https://www.perlfoundation.org/artistic-license-20.html>.
