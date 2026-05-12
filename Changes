@@ -1,26 +1,28 @@
 Change log for Sys::OsRelease
 
 {{$NEXT}}
- [API CHANGE]
+ - MAJOR
+ - API CHANGE
+ - MINOR
+ - ENHANCEMENTS
+ - SECURITY
+ - REVISION
+ - BUG FIXES
+ - DOCS
 
- [BUG FIXES]
+0.3.1 2026-05-11T21:51:22-07:00 America/Los_Angeles
+ - bump minimum Perl version from 5.6 (2000) to 5.10 (2007) to use the
+   version module
+ * REVISION
+   - add test data for Kali Linux
+   - update Dist::Zilla config to remove git-related metadata conflict
+     (forwarded from WebFetch)
+   - catch up with attributes added to os-release standard since 2022 (from
+     systemd 231 to 260)
+   - enumerate documentation of auto-generated methods from Freedesktop
+     standard
 
- [DOCS]
-
- [ENHANCEMENTS]
-
- [MAJOR]
-
- [MINOR]
-- bump minimum Perl version from 5.6 (2000) to 5.10 (2007) to use the version module
-
- [REVISION]
- - add test data for Kali Linux
- - update Dist::Zilla config to remove git-related metadata conflict (forwarded from WebFetch)
- - catch up with attributes added to os-release standard since 2022 (from systemd 231 to 260)
- - enumerate documentation of auto-generated methods from Freedesktop standard
-
- [SECURITY]
+ * SECURITY
 
 0.3.0 2022-05-15T21:58:03-07:00 America/Los_Angeles
  [DOCS]
@@ -45,6 +47,7 @@ Change log for Sys::OsRelease
 0.2.2 2022-05-13T15:49:53-07:00 America/Los_Angeles
  [DOCS]
  - minor updates to POD docs
+
  [REVISION]
  - build updates
 
@@ -64,30 +67,41 @@ Change log for Sys::OsRelease
 
 0.2.0 2022-04-28T22:58:00-07:00 America/Los_Angeles
  [ENHANCEMENTS]
- - add import_singleton() so new module Sys::OsPackage can import rather than copy the singleton-management methods
+ - add import_singleton() so new module Sys::OsPackage can import rather
+   than copy the singleton-management methods
 
 0.1.1 2022-04-28T16:04:09-07:00 America/Los_Angeles
  [REVISION]
- - based on CPAN Testers feedback, remove occurrences of // operator which did not exist prior to Perl 5.10 (in keeping with module's minimal prerequisites)
+ - based on CPAN Testers feedback, remove occurrences of // operator which
+   did not exist prior to Perl 5.10 (in keeping with module's minimal
+   prerequisites)
 
 0.1.0 2022-04-27T14:47:00-07:00 America/Los_Angeles
  [BUG FIXES]
- - all methods now correctly handle being called via class name in addition to instance reference
+ - all methods now correctly handle being called via class name in addition
+   to instance reference
+
  [MINOR]
  - prefixed "_" on private internal method names
+
  [REVISION]
- - added tests for method calls from the class name in addition to object reference
+ - added tests for method calls from the class name in addition to object
+   reference
 
 0.0.2 2022-04-26T23:22:00-07:00 America/Los_Angeles
  [BUG FIXES]
- - fix from CPAN Testers results: on mswin32 init empty rather than bail out
+ - fix from CPAN Testers results: on mswin32 init empty rather than bail
+   out
+
  [DOCS]
  - expand POD docs with method descriptions
+
  [REVISION]
- - add platform method and configuration items to expand systems recognized as common in ID_LIKE
- - add unit tests for empty configurations simulating systems where os-release doesn't exist (using empty search path)
+ - add platform method and configuration items to expand systems recognized
+   as common in ID_LIKE
+ - add unit tests for empty configurations simulating systems where
+   os-release doesn't exist (using empty search path)
 
 0.0.1 2022-04-26T00:18:04-07:00 America/Los_Angeles
  [REVISION]
  - initial revision
-
