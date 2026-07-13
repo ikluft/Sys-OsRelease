@@ -7,6 +7,8 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
+   - bump minimum Perl version to 5.22 due to Log::Dispatchouli requirement
+     (a dependency of Dist::Zilla)
  - BUG FIXES
  - DOCS
 

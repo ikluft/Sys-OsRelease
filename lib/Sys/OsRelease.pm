@@ -15,8 +15,7 @@ use utf8;
 
 package Sys::OsRelease;
 
-use if $] >= 5.016, "feature", "fc";
-use feature qw(say);
+use feature qw(fc say);
 use Config;
 use Carp qw(carp croak);
 
