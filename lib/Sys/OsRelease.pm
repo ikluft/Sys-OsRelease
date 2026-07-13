@@ -15,12 +15,7 @@ use utf8;
 
 package Sys::OsRelease;
 
-BEGIN {
-    use version;
-    if ( $^V >= version->declare("v5.16.0")) {
-        use feature qw(fc);
-    }
-}
+use if $] >= 5.016, "feature", "fc";
 use feature qw(say);
 use Config;
 use Carp qw(carp croak);
