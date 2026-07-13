@@ -16,7 +16,7 @@ jobs:
         perl: ['5.22', '5.30', '5.36', '5.42']
         exclude:
           - runner: windows-latest
-            perl: '5.36'
+            perl: ['5.22', '5.36']
     runs-on: ${{matrix.runner}}
     name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
     steps:
