@@ -15,7 +15,8 @@ use utf8;
 
 package Sys::OsRelease;
 
-use feature qw(fc say);
+use if $] >= 5.016, "feature", "fc";  # retain even though 5.22 is minimum Perl, same code in Sys::OsRelease::Lite
+use feature qw(say);
 use Config;
 use Carp qw(carp croak);
 
