@@ -1,7 +1,23 @@
 # Sys-OsRelease
 [![Perl](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-main.yml/badge.svg)](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-main.yml)
+[![Perl](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-lite.yml/badge.svg)](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-lite.yml)
 
-helper library in Perl for reading OS info from FreeDesktop.Org-standard /etc/os-release file
+This is a Perl library for reading OS info from FreeDesktop.Org-standard /etc/os-release files
+which describe the environment of a Linux or other other Unix system.
+
+## Sys::OsRelease::Lite alternative for Perl versions older than 5.22
+
+In Spring 2026, dependencies of Dist::Zilla forced it to increase its minimum Perl version to 5.22.
+Sys::OsRelease had previously maintained compatibility back to 5.10 through CPAN testing.
+When a user expressed interest in maintaining at least 5.16 compatibility, an alternative
+repackaging called Sys::OsRelease::Lite was made.
+It provides Sys::OsRelease as the same module source code,
+but packaged with ExtUtils::MakeMaker to continue compatibility back to 5.10.
+
+In summary, Sys::OsRelease remains the primary distribution.
+For users whose system has Perl older than 5.22, install Sys::OsRelease::Lite and use Sys::OsRelease available from it.
+The two module distributions cannot both be installed at the same time due to conflict in
+providing the same Sys::OsRelease module.
 
 # Presentations
 

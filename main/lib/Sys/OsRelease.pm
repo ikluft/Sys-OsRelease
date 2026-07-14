@@ -443,6 +443,11 @@ This module maintains minimal prerequisites, and only those which are usually in
 That is intended to be acceptable for establishing system or container environments which contain Perl programs.
 It can also be used for installing or configuring software that needs to know about the system environment.
 
+Note: due to restrictions of the Dist::Zilla build environment and its dependencies,
+Sys::OsRelease had to follow an increase in the minimum Perl version from 5.10 to 5.22.
+For systems with Perl older than 5.22, see below about I<Sys::OsRelease::Lite>
+which repackages Sys::OsRelease without the Dist::Zilla version limitation.
+
 =head2 The os-release Standard
 
 FreeDesktop.Org's os-release standard is at L<https://www.freedesktop.org/software/systemd/man/os-release.html>.
@@ -707,6 +712,18 @@ uses Sys::OsRelease to determine OS type
 =item L<System::Info>
 
 system information collected from multiple sources including system architecture, hardware, OS release data
+
+=item L<Sys::OsRelease::Lite>
+
+A repackaging of Sys::OsRelease for older versions of Perl before 5.22.
+This was made because dependencies of Dist::Zilla forced it to bump its minimum Perl version to 5.22,
+which in turn forced Sys::OsRelease to follow.
+Sys::OsRelease::Lite provides Sys::OsRelease with the same source code,
+implemented as a symbolic link in the common Git repository that houses both modules.
+It is packaged with L<ExtUtils::MakeMaker> to maintain availability back to Perl 5.10.
+Compatibility was at time time still being maintained via CPAN testing was back to 5.10.
+The use case was systems with RHEL 6 on Perl 5.10.1 and RHEL 7 on Perl 5.16,
+or similar variations.
 
 =back
 
