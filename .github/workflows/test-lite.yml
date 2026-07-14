@@ -36,6 +36,10 @@ jobs:
       - name: Show Perl Version
         run: |
           perl -v
+      - name: Install Gnu Make on Windows
+        if: ${{ startsWith( matrix.runner, 'windows-')}}
+        run: |
+          choco install make
       - name: Install ExtUtils::MakeMaker + build deps
         run: |
           cpanm -v
@@ -45,14 +49,9 @@ jobs:
         run: |
           perl Makefile.PL
           cpanm --installdeps .
-      - name: Run tests on Linux/MacOS
-        if: ${{ startsWith( matrix.runner, 'ubuntu-') || startsWith( matrix.runner, 'macos-') }}
+      - name: Run tests
         run: |
           make test
-      - name: Run tests on Windows
-        if: ${{ startsWith( matrix.runner, 'windows-')}}
-        run: |
-          nmake test
       - name: Show Errors on Windows
         if: ${{ failure() && startsWith( matrix.runner, 'windows-')}}
         run: |
