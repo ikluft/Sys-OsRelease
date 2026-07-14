@@ -1,5 +1,5 @@
 ---
-name: Sys_OsRelease
+name: Sys_OsRelease_Lite
 # yamllint disable rule:line-length
 on:  # yamllint disable-line rule:truthy
   push:
@@ -42,8 +42,8 @@ jobs:
           cpanm --dev --notest ExtUtils::MakeMaker~'>= 7.65_02'  # use dev release with fix for spurious errors
       - name: Install Modules
         run: |
-          cpanm --installdeps .
           perl Makefile.PL
+          cpanm --installdeps .
       - name: Show Errors on Windows
         if: ${{ failure() && startsWith( matrix.runner, 'windows-')}}
         run: |
