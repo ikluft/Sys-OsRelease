@@ -12,7 +12,7 @@ use Carp qw(croak);
 use ExtUtils::MakeMaker;
 
 my $semver;
-open( my $fh, "-|", "./build_bin/get_semver.pl" )
+open( my $fh, "-|", "perl", "build_bin/get_semver.pl" )
     or croak "failed to run build/get_semver.pl to get version number: $!";
 while (<$fh>) {
     $semver .= $_;
