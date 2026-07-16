@@ -108,7 +108,7 @@ sub find_version
     my $prev_version = ( $rel_len >= 2 ) ? $releases[ $rel_len - 2 ]->version() : "0.0.0";
     debug "prev_version = $prev_version";
     my $prev_semver =
-        Versioning::Scheme::Semantic->normalize_version($prev_version);    # exception if invalid
+        Versioning::Scheme::Semantic->normalize_version($prev_version . "+lite");    # exception if invalid
     debug "prev_semver = $prev_semver";
     if ( not $found_nonempty ) {
         return $prev_semver;

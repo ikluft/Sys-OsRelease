@@ -12,7 +12,7 @@ use Carp qw(croak);
 use ExtUtils::MakeMaker;
 
 my $semver;
-open( my $fh, "-|", "perl", "build_bin/get_semver.pl" )
+open( my $fh, "-|", "perl", "build_tools/get_semver.pl" )
     or croak "failed to run build/get_semver.pl to get version number: $!";
 while (<$fh>) {
     $semver .= $_;
@@ -25,15 +25,18 @@ WriteMakefile(
     NAME             => "Sys::OsRelease::Lite",
     VERSION          => $semver,
     MIN_PERL_VERSION => "5.10.0",
-    #PL_FILES         => {
-    #    "lib/Sys/OsRelease/Lite.pm.PL" => { "templates/Lite.pm" => "lib/Sys/OsRelease/Lite.pm" }
-    #},
+    PL_FILES         => {
+        "build_tools/src_filter.pl" => { "build_tools/input/Lite.pm" => "lib/Sys/OsRelease/Lite.pm" }
+        "build_tools/src_filter.pl" => { "build_tools/input/001_module_load.t" => "t/001_module_load.t" }
+        "build_tools/src_filter.pl" => { "build_tools/input/002_basic.t" => "t/002_basic.t" }
+        "build_tools/src_filter.pl" => { "build_tools/input/003_samples.t" => "t/003_samples.t" }
+        "build_tools/src_filter.pl" => { "build_tools/input/004_import.t" => "t/004_import.t" }
+    },
     #PREREQ_PM => {
     #    "CPAN::Changes" => 0,
     #    "Versioning::Scheme::Semantic" => 0,
     #},
-    #depend => {
-    #    Makefile                    => 'lib/Sys/OsRelease/Lite.pm',
-    #    "lib/Sys/OsRelease/Lite.pm" => "lib/Sys/OsRelease/Lite.pm.PL"
-    #},
+    depend => {
+        Makefile                    => 'build_tools/get_semver.pl',
+    },
 );

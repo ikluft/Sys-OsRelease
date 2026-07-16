@@ -15,7 +15,7 @@ use utf8;
 
 package Sys::OsRelease;
 
-use if $] >= 5.016, "feature", "fc";  # retain even though 5.22 is minimum Perl, same code in Sys::OsRelease::Lite
+use if $] >= 5.016, "feature", "fc";  # retain even though 5.22 is minimum Perl, same code in ...::Lite
 use feature qw(say);
 use Config;
 use Carp qw(carp croak);
@@ -404,9 +404,6 @@ sub _clear_accessor
 
 1;
 
-__END__
-
-# POD documentation
 =encoding utf8
 
 =head1 SYNOPSIS

@@ -1,14 +1,23 @@
 Change log for Sys::OsRelease
 
 {{$NEXT}}
- - MAJOR
- - API CHANGE
- - MINOR
- - ENHANCEMENTS
- - SECURITY
- - REVISION
- - BUG FIXES
- - DOCS
+ [MAJOR]
+
+ [API CHANGE]
+
+ [MINOR]
+
+ [ENHANCEMENTS]
+
+ [REVISION]
+ - rearrange Sys::OsRelease::Lite delivery from symlink to filtering source
+   (with symlink, upload was rejected for conflict)
+
+ [SECURITY]
+
+ [BUG FIXES]
+
+ [DOCS]
 
 0.4.0 2026-07-14T16:52:41-07:00 America/Los_Angeles
  [MINOR]
