@@ -13,8 +13,11 @@ use utf8;
 use Carp qw(croak);
 use Readonly;
 use FindBin qw($Bin);
+use File::Path qw(make_path);
+use File::Basename qw(dirname basename);
 use Config::Tiny;
 use File::Slurp qw(read_file);
+use Data::Dumper;
 
 # constants
 Readonly::Scalar my $Debug        => ( $ENV{SORL_DEBUG} // 0 ? 1 : 0 );
@@ -195,6 +198,7 @@ sub filter_content
 {
     # verify version number was provided by environment
     if ( not defined $Version ) {
+        print STDERR Dumper(\%ENV);
         croak "VERSION expected from Makefile - not found in environment";
     }
 
@@ -207,6 +211,12 @@ sub filter_content
 
     # load input source file
     my @lines = read_file( $input_file );
+
+    # create path to destination directory if needed
+    my $output_dirname = dirname( $output_file );
+    if ( not -d $output_dirname ) {
+        make_path( $output_dirname );
+    }
 
     # write contents
     open( my $output_fh, ">", $output_file )
