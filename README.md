@@ -11,8 +11,9 @@ In Spring 2026, dependencies of Dist::Zilla forced it to increase its minimum Pe
 Sys::OsRelease had previously maintained compatibility back to 5.10 through CPAN testing.
 When a user expressed interest in maintaining at least 5.16 compatibility, an alternative
 repackaging called Sys::OsRelease::Lite was made.
-It provides Sys::OsRelease as the same module source code,
-but packaged with ExtUtils::MakeMaker to continue compatibility back to 5.10.
+It provides essentially the same module source code as Sys::OsRelease
+with the module name filtered to Sys::OsRelease::Lite.
+It's packaged with ExtUtils::MakeMaker to continue compatibility back to 5.10.
 
 In summary, Sys::OsRelease remains the primary distribution.
 For users whose system has Perl older than 5.22, install Sys::OsRelease::Lite and use Sys::OsRelease available from it.
