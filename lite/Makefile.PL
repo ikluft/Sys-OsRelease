@@ -34,12 +34,17 @@ WriteMakefile(
             "t/004_import.t" => "build_tools/input/004_import.t",
         }
     },
-    #PREREQ_PM => {
-    #    "CPAN::Changes" => 0,
-    #    "Versioning::Scheme::Semantic" => 0,
-    #},
+    PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
+    CONFIGURE_REQUIRES => {
+        "CPAN::Changes" => 0,
+        "Versioning::Scheme::Semantic" => 0,
+        "YAML" => 0,
+    },
+    TEST_REQUIRES => {
+        "Test::More" => 0,
+    },
     depend => {
         Makefile                    => 'build_tools/get_semver.pl',
     },
-    postamble => "export VERSION",
+    clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t" },
 );

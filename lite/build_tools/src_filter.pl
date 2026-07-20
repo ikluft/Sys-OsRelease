@@ -18,10 +18,12 @@ use File::Basename qw(dirname basename);
 use Config::Tiny;
 use File::Slurp qw(read_file);
 use Data::Dumper;
+use YAML qw(LoadFile);
 
 # constants
+Readonly::Scalar my $Metafile     => dirname($Bin) . "/MYMETA.yml";
 Readonly::Scalar my $Debug        => ( $ENV{SORL_DEBUG} // 0 ? 1 : 0 );
-Readonly::Scalar my $Version        => $ENV{VERSION};
+Readonly::Scalar my $Version      => version_from_meta();
 Readonly::Scalar my $RecognizeMod => "Sys::OsRelease";
 Readonly::Scalar my $ReplaceMod   => "Sys::OsRelease::Lite";
 Readonly::Scalar my $PkgLineRE    => qr/ ^ \s* package \s+ $RecognizeMod \s* ;  /x;
@@ -37,6 +39,26 @@ sub debug
         say STDERR "debug: " . join( " ", @text );
     }
     return;
+}
+
+# get version number from project metadata
+sub version_from_meta
+{
+    # read YAML data
+    my $metadata = YAML::LoadFile( $Metafile )
+        or croak "$0: failed to read $Metafile";
+    if ( not exists $metadata->{version}) {
+        print STDERR Dumper(\%ENV);
+        croak "$0: Version not found in $Metafile";
+    }
+    my $version = $metadata->{version};
+
+    # just the semantic version numbering - remove "v" prefix if present
+    if ( substr( $version, 0, 1 ) eq "v" ) {
+        substr( $version, 0, 1, "" );
+    }
+
+    return $version;
 }
 
 # print a line of output
