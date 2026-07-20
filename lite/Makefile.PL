@@ -59,8 +59,7 @@ WriteMakefile(
     META_MERGE => {
         "provides" => {
             "Sys::OsRelease::Lite" => {
-                file => "lib/Sys/OsRelease/Lite.p",
-                version => $semver,
+                file => "lib/Sys/OsRelease/Lite.pm",
             },
         },
     },
