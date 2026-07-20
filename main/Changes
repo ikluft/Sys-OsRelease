@@ -11,7 +11,7 @@ Change log for Sys::OsRelease
 
  [REVISION]
  - rearrange Sys::OsRelease::Lite delivery from symlink to filtering source
-   (with symlink, upload was rejected for conflict)
+   to avoid CPAN namespace conflict
 
  [SECURITY]
 

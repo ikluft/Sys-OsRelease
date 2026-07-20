@@ -16,7 +16,7 @@ with the module name filtered to Sys::OsRelease::Lite.
 Using a lighter build process, it's packaged with ExtUtils::MakeMaker to preserve compatibility back to 5.10.
 
 In summary, Sys::OsRelease remains the primary distribution.
-For users whose system has Perl older than 5.22, install Sys::OsRelease::Lite and use Sys::OsRelease available from it.
+For users whose system has Perl older than 5.22, install Sys::OsRelease::Lite.
 
 # Presentations
 
