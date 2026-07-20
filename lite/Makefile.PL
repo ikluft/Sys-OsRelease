@@ -36,12 +36,25 @@ WriteMakefile(
     },
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
     CONFIGURE_REQUIRES => {
+        "ExtUtils::MakeMaker" => 0,
+    },
+    BUILD_REQUIRES => {
         "CPAN::Changes" => 0,
         "Versioning::Scheme::Semantic" => 0,
+        "Readonly" => 0,
+        "FindBin" => 0,
+        "File::Path" => 0,
+        "File::Basename" => 0,
+        "Config::Tiny" => 0,
+        "File::Slurp" => 0,
+        "Data::Dumper" => 0,
         "YAML" => 0,
     },
     TEST_REQUIRES => {
         "Test::More" => 0,
+        "File::Basename" => 0,
+        "File::Find" => 0,
+        "YAML" => 0,
     },
     depend => {
         Makefile                    => 'build_tools/get_semver.pl',
