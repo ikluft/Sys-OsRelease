@@ -56,8 +56,17 @@ WriteMakefile(
         "File::Find" => 0,
         "YAML" => 0,
     },
+    META_MERGE => {
+        "provides" => {
+            "Sys::OsRelease::Lite" => {
+                file => "lib/Sys/OsRelease/Lite.p",
+                version => $semver,
+            },
+        },
+    },
     depend => {
         Makefile                    => 'build_tools/get_semver.pl',
     },
-    clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t" },
+    clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
+        . "MANIFEST" },
 );
