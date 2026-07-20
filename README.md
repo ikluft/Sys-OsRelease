@@ -30,15 +30,35 @@ Sys::OsRelease - read operating system details from standard /etc/os-release fil
 
 ## SYNOPSIS
 
-non-object-oriented:
+non-object-oriented (Perl 5.22 and later):
+
+    use Sys::OsRelease;
 
     Sys::OsRelease->init();
     my $id = Sys::OsRelease->id();
     my $id_like = Sys::OsRelease->id_like();
 
-object-oriented:
+object-oriented (Perl 5.22 and later):
+
+    use Sys::OsRelease;
 
     my $osrelease = Sys::OsRelease->instance();
+    my $id = $osrelease->id();
+    my $id_like = $osrelease->id_like();
+
+non-object-oriented (Perl up to 5.20):
+
+    use Sys::OsRelease::Lite;
+
+    Sys::OsRelease::Lite->init();
+    my $id = Sys::OsRelease::Lite->id();
+    my $id_like = Sys::OsRelease::Lite->id_like();
+
+object-oriented (Perl up to 5.20):
+
+    use Sys::OsRelease::Lite;
+
+    my $osrelease = Sys::OsRelease::Lite->instance();
     my $id = $osrelease->id();
     my $id_like = $osrelease->id_like();
 
