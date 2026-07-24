@@ -37,7 +37,6 @@ WriteMakefile(
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
     CONFIGURE_REQUIRES => {
         "ExtUtils::MakeMaker" => 0,
-        "Readonly" => 0,
         "CPAN::Changes" => 0,
         "Versioning::Scheme::Semantic" => 0,
     },
