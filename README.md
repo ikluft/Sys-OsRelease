@@ -3,7 +3,12 @@
 [![Perl](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-lite.yml/badge.svg)](https://github.com/ikluft/Sys-OsRelease/actions/workflows/test-lite.yml)
 
 This is a Perl library for reading OS info from FreeDesktop.Org-standard /etc/os-release files
-which describe the environment of a Linux or other other Unix system.
+which describe the environment of a Linux or other Unix systems.
+
+This is the source code repository. See also the distribution on CPAN.
+
+* [Sys::OsRelease](https://metacpan.org/pod/Sys::OsRelease)
+* [Sys::OsRelease::Lite](https://metacpan.org/pod/Sys::OsRelease::Lite)
 
 ## Sys::OsRelease::Lite alternative for Perl versions older than 5.22
 
