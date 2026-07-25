@@ -7,7 +7,7 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
-   - Lite: remove Readonly in get_semver.pl due to apparent CPAN Testers glitch fails to install for configure_requires
+   - Lite: get_semver.pl changes for test environments: run with same version of Perl as Makefile.PL, remove Readonly
  - BUG FIXES
  - DOCS
 
