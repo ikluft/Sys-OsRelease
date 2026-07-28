@@ -7,8 +7,8 @@ which describe the environment of a Linux or other Unix systems.
 
 This is the source code repository. See also the distribution on CPAN.
 
-* [Sys::OsRelease](https://metacpan.org/pod/Sys::OsRelease)
-* [Sys::OsRelease::Lite](https://metacpan.org/pod/Sys::OsRelease::Lite)
+* Sys::OsRelease - [source code](main), [CPAN distribution](https://metacpan.org/pod/Sys::OsRelease)
+* Sys::OsRelease::Lite - [source code](lite), [CPAN distribution](https://metacpan.org/pod/Sys::OsRelease::Lite)
 
 ## Sys::OsRelease::Lite alternative for Perl versions older than 5.22
 
