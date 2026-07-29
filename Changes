@@ -7,9 +7,13 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
-   - Lite: get_semver.pl changes for test environments: run with same version of Perl as Makefile.PL, remove Readonly
  - BUG FIXES
  - DOCS
+
+0.4.5 2026-07-25T00:13:08-07:00 America/Los_Angeles
+ [REVISION]
+ - Lite: get_semver.pl changes for test environments: run with same version
+   of Perl as Makefile.PL, remove Readonly
 
 0.4.4 2026-07-23T16:57:56-07:00 America/Los_Angeles
  [BUG FIXES]
