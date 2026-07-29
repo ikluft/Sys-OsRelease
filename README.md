@@ -215,6 +215,6 @@ Patches and enhancements may be submitted via a pull request at [https://github.
 
 ## LICENSE INFORMATION
 
-Copyright (c) 2022 by Ian Kluft
+Copyright 2022-2026 by Ian Kluft
 
 This module is distributed in the hope that it will be useful, but it is provided “as is” and without any express or implied warranties. For details, see the full text of the license in the file LICENSE or at [https://www.perlfoundation.org/artistic-license-20.html](https://www.perlfoundation.org/artistic-license-20.html).
