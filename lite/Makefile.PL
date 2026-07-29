@@ -37,11 +37,13 @@ WriteMakefile(
     },
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
     CONFIGURE_REQUIRES => {
+        "Carp" => 0,
         "ExtUtils::MakeMaker" => 0,
         "CPAN::Changes" => 0,
         "Versioning::Scheme::Semantic" => 0,
     },
     BUILD_REQUIRES => {
+        "Carp" => 0,
         "Readonly" => 0,
         "FindBin" => 0,
         "File::Path" => 0,
@@ -52,6 +54,8 @@ WriteMakefile(
         "YAML" => 0,
     },
     TEST_REQUIRES => {
+        "Carp" => 0,
+        "Cwd" => 0,
         "Test::More" => 0,
         "File::Basename" => 0,
         "File::Find" => 0,
