@@ -9,6 +9,7 @@ Change log for Sys::OsRelease
  - REVISION
  - BUG FIXES
  - DOCS
+   - move module docs from repo's top README to source subdirectories' READMEs to be included with modules again
 
 0.4.5 2026-07-25T00:13:08-07:00 America/Los_Angeles
  [REVISION]
