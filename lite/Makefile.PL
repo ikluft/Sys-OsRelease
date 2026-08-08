@@ -11,6 +11,7 @@ use utf8;
 use Carp qw(croak);
 use ExtUtils::MakeMaker;
 
+# compute semantic version
 my $perl = $^X;
 my $semver;
 open( my $fh, "-|", $perl, "build_tools/get_semver.pl" )
@@ -22,10 +23,11 @@ close $fh
     or croak "failed to close pipe from build/get_semver.pl: $!";
 chomp $semver;
 
+# preop is used by dist to build README files from source code POD docs
 my $preop = 'perldoc -uT build_tools/input/OsRelease.pm | tee $(DISTVNAME)/README.pod > README.pod;'
-    . 'pod2markdown README.pod | tee $(DISTVNAME)/README.md > README.md;'
     . 'pod2text README.pod | tee $(DISTVNAME)/README > README';
 
+# ExtUtils::MakeMaker configuration - builds Makefile
 WriteMakefile(
     NAME             => "Sys::OsRelease::Lite",
     VERSION          => $semver,
@@ -56,7 +58,6 @@ WriteMakefile(
         "File::Slurp" => 0,
         "Data::Dumper" => 0,
         "YAML" => 0,
-        "Pod::Markdown" => 0,
     },
     TEST_REQUIRES => {
         "Carp" => 0,
@@ -80,5 +81,5 @@ WriteMakefile(
         PREOP => $preop,
     },
     clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
-        . "MANIFEST README README.pod README.md" },
+        . "MANIFEST README README.pod" },
 );
