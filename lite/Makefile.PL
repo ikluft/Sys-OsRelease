@@ -22,6 +22,10 @@ close $fh
     or croak "failed to close pipe from build/get_semver.pl: $!";
 chomp $semver;
 
+my $preop = 'perldoc -uT build_tools/input/OsRelease.pm | tee $(DISTVNAME)/README.pod > README.pod;'
+    . 'pod2markdown README.pod | tee $(DISTVNAME)/README.md > README.md;'
+    . 'pod2text README.pod | tee $(DISTVNAME)/README > README';
+
 WriteMakefile(
     NAME             => "Sys::OsRelease::Lite",
     VERSION          => $semver,
@@ -52,6 +56,7 @@ WriteMakefile(
         "File::Slurp" => 0,
         "Data::Dumper" => 0,
         "YAML" => 0,
+        "Pod::Markdown" => 0,
     },
     TEST_REQUIRES => {
         "Carp" => 0,
@@ -71,6 +76,9 @@ WriteMakefile(
     depend => {
         Makefile                    => 'build_tools/get_semver.pl',
     },
+    dist => {
+        PREOP => $preop,
+    },
     clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
-        . "MANIFEST" },
+        . "MANIFEST README README.pod README.md" },
 );
