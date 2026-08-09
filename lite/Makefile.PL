@@ -46,6 +46,7 @@ WriteMakefile(
         "Carp" => 0,
         "ExtUtils::MakeMaker" => 0,
         "CPAN::Changes" => 0,
+        "CPAN::Meta" => 0,
         "Versioning::Scheme::Semantic" => 0,
     },
     BUILD_REQUIRES => {
@@ -73,7 +74,20 @@ WriteMakefile(
                 file => "lib/Sys/OsRelease/Lite.pm",
             },
         },
+        "resources" => {
+            "repository" => {
+                type => 'git',
+                url => 'git://github.com/ikluft/Sys-OsRelease.git',
+                web => 'https://github.com/ikluft/Sys-OsRelease',
+            },
+            "bugtracker" => "https://github.com/ikluft/Sys-OsRelease/issues",
+        },
+        "x_spdx_expression" => "Artistic-2.0",
     },
+    AUTHOR => [
+        "Ian Kluft <https://github.com/ikluft>",
+    ],
+    LICENSE => "artistic_2",
     depend => {
         Makefile                    => 'build_tools/get_semver.pl',
     },

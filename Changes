@@ -7,8 +7,10 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
+   - export module metadata for Sys::OsRelease::Lite to fill gaps which Dist::Zilla handled for Sys::OsRelease
  - BUG FIXES
  - DOCS
+   - minor updates to docs following split of Sys::OsRelease::Lite, convert README POD to text for dist tarball
    - move module docs from repo's top README to source subdirectories' READMEs to be included with modules again
 
 0.4.5 2026-07-25T00:13:08-07:00 America/Los_Angeles
