@@ -8,6 +8,7 @@ Change log for Sys::OsRelease
  - SECURITY
  - REVISION
    - export module metadata for Sys::OsRelease::Lite to fill gaps which Dist::Zilla handled for Sys::OsRelease
+   - clean up Perl::Critic warnings in t/*.t tests
  - BUG FIXES
  - DOCS
    - minor updates to docs following split of Sys::OsRelease::Lite, convert README POD to text for dist tarball
