@@ -44,7 +44,7 @@ WriteMakefile(
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
     CONFIGURE_REQUIRES => {
         "Carp" => 0,
-        "ExtUtils::MakeMaker" => 0,
+        "ExtUtils::MakeMaker" => "7.36",
         "CPAN::Changes" => 0,
         "CPAN::Meta" => 0,
         "Versioning::Scheme::Semantic" => 0,
