@@ -83,6 +83,9 @@ WriteMakefile(
             "bugtracker" => "https://github.com/ikluft/Sys-OsRelease/issues",
         },
         "x_spdx_expression" => "Artistic-2.0",
+        no_index => {
+            directory => [ 'build_tools' ],
+        },
     },
     AUTHOR => [
         "Ian Kluft <https://github.com/ikluft>",
