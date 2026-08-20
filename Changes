@@ -8,6 +8,8 @@ Change log for Sys::OsRelease
  - SECURITY
  - REVISION
    - add MANIFEST file since 'make manifest' misses README.pod and README
+   - add unit test to catch missing attributes in POD docs
+   - abandon +lite suffix on Sys::OsRelease::Lite versions (CPAN testing site warnings)
  - BUG FIXES
  - DOCS
    - fix: FANCY_NAME (added in 0.4.4) missing from POD docs
