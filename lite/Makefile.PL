@@ -98,5 +98,5 @@ WriteMakefile(
         PREOP => $preop,
     },
     clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
-        . "MANIFEST README README.pod" },
+        . "README README.pod" },
 );

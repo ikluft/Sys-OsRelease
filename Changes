@@ -7,8 +7,10 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
+   - add MANIFEST file since 'make manifest' misses README.pod and README
  - BUG FIXES
  - DOCS
+   - fix: FANCY_NAME (added in 0.4.4) missing from POD docs
 
 0.4.7 2026-08-13T23:29:56-07:00 America/Los_Angeles
  [BUG FIXES]
