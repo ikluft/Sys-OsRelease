@@ -39,6 +39,7 @@ WriteMakefile(
             "t/002_basic.t" => "build_tools/input/002_basic.t",
             "t/003_samples.t" => "build_tools/input/003_samples.t",
             "t/004_import.t" => "build_tools/input/004_import.t",
+            "t/005_pod_content.t" => "build_tools/input/005_pod_content.t",
         }
     },
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
@@ -67,6 +68,7 @@ WriteMakefile(
         "File::Basename" => 0,
         "File::Find" => 0,
         "YAML" => 0,
+        "Pod::Simple" => 0,
     },
     META_MERGE => {
         "provides" => {
@@ -98,5 +100,5 @@ WriteMakefile(
         PREOP => $preop,
     },
     clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
-        . "README README.pod" },
+        . "t/005_pod_content.t README README.pod" },
 );
