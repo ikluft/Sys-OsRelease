@@ -16,7 +16,6 @@ perlcritic.rc
 README.md
 README.pod
 README
-Sys-OsRelease-Lite-0.4.7+lite.tar.gz
 t/001_module_load.t
 t/002_basic.t
 t/003_samples.t
