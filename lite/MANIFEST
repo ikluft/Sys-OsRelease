@@ -20,6 +20,7 @@ t/001_module_load.t
 t/002_basic.t
 t/003_samples.t
 t/004_import.t
+t/005_pod_content.t
 t/README.md
 t/test-inputs/003_samples/gen-sample
 t/test-inputs/003_samples/os-release-almalinux
