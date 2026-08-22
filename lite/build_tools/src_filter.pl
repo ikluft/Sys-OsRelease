@@ -206,7 +206,7 @@ sub filter_content
 
         # add version if package line was found
         if ( $found_pkg ) {
-            do_print ( $output, '$' . $ReplaceMod . "::VERSION = '" . $Version . "';" );
+            do_print ( $output, 'our $VERSION = "' . $Version . '";' );
         }
 
     }

@@ -7,9 +7,13 @@ Change log for Sys::OsRelease
  - ENHANCEMENTS
  - SECURITY
  - REVISION
+   - add version to "provides" metadata, simplify version in source filter
  - BUG FIXES
-   - more adjustments to MANIFEST to fix CPAN Testers errors
  - DOCS
+
+0.4.10 2026-08-21T23:44:20-07:00 America/Los_Angeles
+ [BUG FIXES]
+ - more adjustments to MANIFEST to fix errors reported by CPAN Testers
 
 0.4.9 2026-08-21T18:26:07-07:00 America/Los_Angeles
  [BUG FIXES]

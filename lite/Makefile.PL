@@ -74,6 +74,7 @@ WriteMakefile(
         "provides" => {
             "Sys::OsRelease::Lite" => {
                 file => "lib/Sys/OsRelease/Lite.pm",
+                version => $semver,
             },
         },
         "resources" => {
