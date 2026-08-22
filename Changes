@@ -8,8 +8,12 @@ Change log for Sys::OsRelease
  - SECURITY
  - REVISION
  - BUG FIXES
-   - add missing t/005_pod_content.t to MANIFEST (caught by CPAN Testers)
+   - more adjustments to MANIFEST to fix CPAN Testers errors
  - DOCS
+
+0.4.9 2026-08-21T18:26:07-07:00 America/Los_Angeles
+ [BUG FIXES]
+ - add missing t/005_pod_content.t to MANIFEST (caught by CPAN Testers)
 
 0.4.8 2026-08-20T16:36:47-07:00 America/Los_Angeles
  [REVISION]

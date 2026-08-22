@@ -3,6 +3,7 @@ build_tools/input/001_module_load.t
 build_tools/input/002_basic.t
 build_tools/input/003_samples.t
 build_tools/input/004_import.t
+build_tools/input/005_pod_content.t
 build_tools/input/dist.ini
 build_tools/input/OsRelease.pm
 build_tools/src_filter.pl
@@ -13,14 +14,9 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 perlcritic.rc
+README
 README.md
 README.pod
-README
-t/001_module_load.t
-t/002_basic.t
-t/003_samples.t
-t/004_import.t
-t/005_pod_content.t
 t/README.md
 t/test-inputs/003_samples/gen-sample
 t/test-inputs/003_samples/os-release-almalinux
