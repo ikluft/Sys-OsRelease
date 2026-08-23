@@ -4,6 +4,7 @@ build_tools/input/002_basic.t
 build_tools/input/003_samples.t
 build_tools/input/004_import.t
 build_tools/input/005_pod_content.t
+build_tools/input/006_export.t
 build_tools/input/dist.ini
 build_tools/input/OsRelease.pm
 build_tools/src_filter.pl

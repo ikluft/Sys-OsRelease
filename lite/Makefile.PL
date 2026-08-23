@@ -40,6 +40,7 @@ WriteMakefile(
             "t/003_samples.t" => "build_tools/input/003_samples.t",
             "t/004_import.t" => "build_tools/input/004_import.t",
             "t/005_pod_content.t" => "build_tools/input/005_pod_content.t",
+            "t/006_export.t" => "build_tools/input/006_export.t",
         }
     },
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
@@ -101,5 +102,5 @@ WriteMakefile(
         PREOP => $preop,
     },
     clean => { FILES => "lib/Sys/OsRelease/Lite.pm t/001_module_load.t t/002_basic.t t/003_samples.t t/004_import.t "
-        . "t/005_pod_content.t README README.pod" },
+        . "t/005_pod_content.t t/006_export.t README README.pod" },
 );
