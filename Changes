@@ -5,6 +5,7 @@ Change log for Sys::OsRelease
  - API CHANGE
  - MINOR
  - ENHANCEMENTS
+   - export osrelease() into caller namespace to streamline access to instance from Sys::OsRelease or ::Lite
  - SECURITY
  - REVISION
    - add version to "provides" metadata, simplify version in source filter
