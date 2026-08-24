@@ -5,12 +5,18 @@ Change log for Sys::OsRelease
  - API CHANGE
  - MINOR
  - ENHANCEMENTS
-   - export osrelease() into caller namespace to streamline access to instance from Sys::OsRelease or ::Lite
  - SECURITY
  - REVISION
-   - add version to "provides" metadata, simplify version in source filter
  - BUG FIXES
  - DOCS
+
+0.5.0 2026-08-22T21:14:49-07:00 America/Los_Angeles
+ [ENHANCEMENTS]
+ - export osrelease() into caller namespace to streamline access to
+   instance from Sys::OsRelease or ::Lite
+
+ [REVISION]
+ - add version to "provides" metadata, simplify version in source filter
 
 0.4.10 2026-08-21T23:44:20-07:00 America/Los_Angeles
  [BUG FIXES]
