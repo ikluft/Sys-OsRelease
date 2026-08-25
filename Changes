@@ -8,6 +8,7 @@ Change log for Sys::OsRelease
  - SECURITY
  - REVISION
  - BUG FIXES
+   - fix semantic versioning to prevent bumping to x.y.00 when previous had patch level >=10
  - DOCS
 
 0.5.0 2026-08-22T21:14:49-07:00 America/Los_Angeles

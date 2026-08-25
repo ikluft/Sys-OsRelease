@@ -40,6 +40,17 @@ my %GroupLevel = (
     DOCS         => 2,
 );
 
+# less-strict semantic version regex based on Versioning::Scheme::Semantic, accepts that module's misformatted output
+my $SemVerRE = qr/
+                    \A
+                    ([0-9]+)\.                                       # 1=major
+                    ([0-9]+)\.                                       # 2=minor
+                    ([0-9]+)                                         # 3=patch
+                    (?:-([0-9]|[1-9][0-9]*|[A-Za-z-][0-9A-Za-z-]*))? # 4=pre-release identifier
+                    (?:\+([0-9A-Za-z-]+))?                           # 5=metadata
+                    \z
+                  /x;
+
 # debugging statements when enabled
 sub debug
 {
@@ -76,6 +87,22 @@ sub get_semver_level
     return $semver_level;
 }
 
+# bump the semantic version with formatting of the result
+# works around a quirk in Versioning::Scheme::Semantic that makes x.y.00 if previous x.y.z had 2 digits for z
+# for example: bumping 0.4.10 incorrectly made 0.5.00, with this function correctly makes 0.5.0
+sub bump_semver
+{
+    my ( $prev_semver, $semver_level ) = @_;
+    my $bump_semver = Versioning::Scheme::Semantic->bump_version( $prev_semver, { part => $semver_level } );
+    $bump_semver =~ $SemVerRE
+        or croak "can't parse version in bump_semver($prev_semver, $semver_level)";
+    my ( $major, $minor, $patch, $prerelease, $metadata ) = ( $1, $2, $3, $4, $5 );
+    my $format_semver = sprintf "%d.%d.%d%s%s", $major, $minor, $patch, 
+        (( defined $prerelease ) ? "-$prerelease" : "" ),
+        (( defined $metadata ) ? "+$metadata" : "" );
+    return $format_semver;
+}
+
 # obtain current version and increment to return next version
 sub find_version
 {
@@ -110,8 +137,7 @@ sub find_version
     if ( not $found_nonempty ) {
         return $prev_semver;
     }
-    my $next_semver =
-        Versioning::Scheme::Semantic->bump_version( $prev_semver, { part => $semver_level } );
+    my $next_semver = bump_semver( $prev_semver, $semver_level );
     debug "next_semver = $next_semver";
     return $next_semver;
 }
