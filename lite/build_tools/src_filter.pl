@@ -17,7 +17,7 @@ use File::Path qw(make_path);
 use File::Basename qw(dirname basename);
 use Config::Tiny;
 use File::Slurp qw(read_file);
-use Data::Dumper;
+#use Data::Dumper;
 use YAML qw(LoadFile);
 
 # constants
@@ -48,7 +48,7 @@ sub version_from_meta
     my $metadata = YAML::LoadFile( $Metafile )
         or croak "$0: failed to read $Metafile";
     if ( not exists $metadata->{version}) {
-        print STDERR Dumper(\%ENV);
+        # print STDERR Dumper(\%ENV);
         croak "$0: Version not found in $Metafile";
     }
     my $version = $metadata->{version};
@@ -220,7 +220,7 @@ sub filter_content
 {
     # verify version number was provided by environment
     if ( not defined $Version ) {
-        print STDERR Dumper(\%ENV);
+        # print STDERR Dumper(\%ENV);
         croak "VERSION expected from Makefile - not found in environment";
     }
 

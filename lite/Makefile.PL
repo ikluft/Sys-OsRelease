@@ -31,7 +31,7 @@ my $preop = 'perldoc -uT build_tools/input/OsRelease.pm | tee $(DISTVNAME)/READM
 WriteMakefile(
     NAME             => "Sys::OsRelease::Lite",
     VERSION          => $semver,
-    MIN_PERL_VERSION => "5.10.1",
+    MIN_PERL_VERSION => "5.10",  # 5.10 needed for feature 'say'
     PL_FILES         => {
         "build_tools/src_filter.pl" => {
             "lib/Sys/OsRelease/Lite.pm" => "build_tools/input/OsRelease.pm",
@@ -44,6 +44,9 @@ WriteMakefile(
         }
     },
     PM => { 'lib/Sys/OsRelease/Lite.pm' => '$(INST_LIB)/Sys/OsRelease/Lite.pm' },
+    PREREQ_PM => {
+        "Carp" => 0,
+    },
     CONFIGURE_REQUIRES => {
         "Carp" => 0,
         "ExtUtils::MakeMaker" => "7.36",
@@ -53,23 +56,22 @@ WriteMakefile(
     },
     BUILD_REQUIRES => {
         "Carp" => 0,
-        "Readonly" => 0,
-        "FindBin" => 0,
-        "File::Path" => 0,
-        "File::Basename" => 0,
         "Config::Tiny" => 0,
+        "File::Basename" => 0,
+        "File::Path" => 0,
         "File::Slurp" => 0,
-        "Data::Dumper" => 0,
+        "FindBin" => 0,
+        "Readonly" => 0,
         "YAML" => 0,
     },
     TEST_REQUIRES => {
         "Carp" => 0,
         "Cwd" => 0,
-        "Test::More" => 0,
         "File::Basename" => 0,
         "File::Find" => 0,
+        "Pod::Simple::SimpleTree" => 0,
+        "Test::More" => 0,
         "YAML" => 0,
-        "Pod::Simple" => 0,
     },
     META_MERGE => {
         "provides" => {
