@@ -462,7 +462,7 @@ object-oriented
   sub get_like_distro
   {
     my $info = osrelease();
-    my @ids = ( $info->id(), $info->id_like() // () );
+    my @ids = ( $info->id(), split( ' ', $info->id_like() // "" ));
     return @ids;
   }
   say join " ", get_like_distro();
@@ -474,7 +474,7 @@ non-object-oriented (Perl 5.22 and later):
   my $id = Sys::OsRelease->id();
   my $id_like = Sys::OsRelease->id_like();
 
-non-object-oriented (Perl 5.10.1 to 5.21):
+non-object-oriented (Perl 5.10 to 5.21):
 
   use Sys::OsRelease::Lite;
 
@@ -796,7 +796,7 @@ implemented with a filter on the source code changing the name of the module.
 The name change is just to prevent a namespace collision in CPAN, but is otherwise the same module.
 It is packaged with L<ExtUtils::MakeMaker> to maintain availability back to Perl 5.10.
 Compatibility was at the time still being maintained via CPAN testing back to 5.10.
-The use case was systems with RHEL 6 on Perl 5.10.1 and RHEL 7 on Perl 5.16,
+The use case was systems with RHEL 6 on Perl 5.10 and RHEL 7 on Perl 5.16,
 or similar variations on enterprise or other infrastructure installations.
 
 =back
