@@ -31,7 +31,7 @@ my $preop = 'perldoc -uT build_tools/input/OsRelease.pm | tee $(DISTVNAME)/READM
 WriteMakefile(
     NAME             => "Sys::OsRelease::Lite",
     VERSION          => $semver,
-    MIN_PERL_VERSION => "5.10",  # 5.10 needed for feature 'say'
+    MIN_PERL_VERSION => "5.10.0",  # 5.10 needed for feature 'say'
     PL_FILES         => {
         "build_tools/src_filter.pl" => {
             "lib/Sys/OsRelease/Lite.pm" => "build_tools/input/OsRelease.pm",
