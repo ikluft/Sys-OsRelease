@@ -43,7 +43,7 @@ jobs:
       - name: Install ExtUtils::MakeMaker + build deps
         run: |
           cpanm -v
-          cpanm --dev --notest ExtUtils::MakeMaker~'>= 7.65_02'  # use dev release with fix for spurious errors
+          cpanm --dev --notest ExtUtils::MakeMaker~'>= 7.66'
           cpanm --notest Readonly CPAN::Changes Versioning::Scheme::Semantic
       - name: Install Modules
         run: |
@@ -52,7 +52,8 @@ jobs:
       - name: Run tests
         run: |
           make test
-      - name: Run dist tests (unpack tarball)
+      - name: Run dist tests (unpack tarball), except perl 5.30 on windows which chokes on symlinks
+        if: ${{ !( startsWith( matrix.runner, 'windows-') && matrix.perl == '5.30' ) }}
         run: |
           make disttest
       - name: Show Errors on Windows
