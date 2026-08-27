@@ -3,9 +3,9 @@ name: Sys_OsRelease_Lite
 # yamllint disable rule:line-length
 on:  # yamllint disable-line rule:truthy
   push:
-    paths: ['lite/**', '.github/workflows/test-lite.yml']
+    paths: ['lite/**', '.github/workflows/test-lite.yml', 'main/lib/Sys/OsRelease.pm', 'main/dist.ini', 'main/t/*.t']
   pull_request:
-    paths: ['lite/**', '.github/workflows/test-lite.yml']
+    paths: ['lite/**', '.github/workflows/test-lite.yml', 'main/lib/Sys/OsRelease.pm', 'main/dist.ini', 'main/t/*.t']
   workflow_dispatch:
   # schedule:
   #   - cron: '42 5 * * *'
