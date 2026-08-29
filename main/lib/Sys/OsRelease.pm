@@ -526,7 +526,7 @@ On operating systems that do not have os-release, which are most non-Linux and n
 Sys::OsRelease and Sys::OsRelease::Lite do not return an error.
 Instead, all attributes are empty.
 The status can be detected by the osrelease_path() method returning a path when the file was found
-or an undefined value when it was not found.
+or undef when it was not found.
 On systems without os-release, the platform() method returns the operating system name from Config.
 
 =head2 Sys::OsRelease or Sys::OsRelease::Lite?
@@ -671,8 +671,8 @@ The search path can be replaced by providing a "search_path" parameter to instan
 containing the directories to search.
 
 If no os-release file was found, for example on systems other than Linux or BSD, it returns undef.
-So osrelease_path() returning defined or undefined may be used to detect whether os-release was found on the system.
-When not found, all attributes are undefined and the platform() method returns the operating system name from Config.
+So osrelease_path() returning defined or undef may be used to detect whether os-release was found on the system.
+When not found, all attributes are undef and the platform() method returns the operating system name from Config.
 
 =item found_attrs()
 
