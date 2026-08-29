@@ -525,6 +525,11 @@ in order to retain support for legacy Perl installations.
 
 Sys::OsRelease::Lite is the same module in all but name. A release script filters the source code of Sys::OsRelease to change its name. Then Sys::OsRelease::Lite is built with ExtUtils::MakeMaker to maintain compatibility back to Perl 5.10. The two are released in parallel with the same version number.
 
+For scripts and modules which use Perl versions of 5.22 or later, Sys::OsRelease is recommended.
+For modules which maintain support for Perl versions back to 5.10,
+the need to select a single module dependency means Sys::OsRelease::Lite must be used.
+It also works through current Perl releases.
+
 =head1 METHODS
 
 =head2 Exported functions
