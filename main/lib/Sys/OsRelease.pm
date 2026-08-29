@@ -251,6 +251,11 @@ sub _new_instance
         }
     }
 
+    # add empty _config entry if needed
+    if ( not exists $obj{_config}) {
+        $obj{_config} = {};
+    }
+
     # bless instance and load file
     my $obj_ref = bless \%obj, $class;
     $obj_ref->_load_file();
@@ -515,6 +520,15 @@ Current attributes recognized by Sys::OsRelease and Sys::OsRelease::Lite are:
 If other attributes are found in the os-release file, they will be accepted.
 Folded to lower case, the attribute names are used as keys in an internal hash structure.
 
+=head3 Operating systems without os-release
+
+On operating systems that do not have os-release, which are most non-Linux and non-BSD systems,
+Sys::OsRelease and Sys::OsRelease::Lite do not return an error.
+Instead, all attributes are empty.
+The status can be detected by the osrelease_path() method returning a path when the file was found
+or an undefined value when it was not found.
+On systems without os-release, the platform() method returns the operating system name from Config.
+
 =head2 Sys::OsRelease or Sys::OsRelease::Lite?
 
 Due to restrictions of the Dist::Zilla build environment and its dependencies,
@@ -654,7 +668,11 @@ returns the path where os-release was found.
 
 The default search path is /etc, /usr/lib and /run/host as defined by the standard.
 The search path can be replaced by providing a "search_path" parameter to instance()/new() with an arrayref
-containing the directories to search. This feature is currently only used for testing purposes.
+containing the directories to search.
+
+If no os-release file was found, for example on systems other than Linux or BSD, it returns undef.
+So osrelease_path() returning defined or undefined may be used to detect whether os-release was found on the system.
+When not found, all attributes are undefined and the platform() method returns the operating system name from Config.
 
 =item found_attrs()
 
