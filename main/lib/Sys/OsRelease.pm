@@ -726,6 +726,8 @@ which includes descriptions of each attribute.
 
 =item pretty_name()
 
+=item fancy_name()
+
 =item cpe_name()
 
 =item variant()
