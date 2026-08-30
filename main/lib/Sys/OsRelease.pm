@@ -802,6 +802,20 @@ Related modules:
 
 =over 1
 
+=item L<Sys::OsRelease> / L<Sys::OsRelease::Lite>
+
+This is the same documentation for both.
+Sys::OsRelease::Lite is a repackaging of Sys::OsRelease for older versions of Perl before 5.22.
+Sys::OsRelease::Lite was made because dependencies of Dist::Zilla forced it to bump its minimum Perl version to 5.22,
+which in turn forced Sys::OsRelease to follow.
+Sys::OsRelease::Lite provides Sys::OsRelease with the same source code,
+implemented with a filter on the source code changing the name of the module.
+The name change is just to prevent a namespace collision in CPAN, but is otherwise the same module.
+Sys::OsRelease::Lite is packaged with L<ExtUtils::MakeMaker> to maintain availability back to Perl 5.10.
+Compatibility was at the time still being maintained via CPAN testing back to 5.10.
+The use case was systems with RHEL 6 on Perl 5.10 and RHEL 7 on Perl 5.16,
+or similar variations on enterprise or other infrastructure installations.
+
 =item L<Sys::OsPackage>
 
 installs Perl modules, for example as dependencies of a script, via OS packages if available or otherwise via CPAN -
@@ -810,19 +824,6 @@ uses Sys::OsRelease to determine OS type
 =item L<System::Info>
 
 system information collected from multiple sources including system architecture, hardware, OS release data
-
-=item L<Sys::OsRelease::Lite>
-
-This is a repackaging of Sys::OsRelease for older versions of Perl before 5.22.
-This was made because dependencies of Dist::Zilla forced it to bump its minimum Perl version to 5.22,
-which in turn forced Sys::OsRelease to follow.
-Sys::OsRelease::Lite provides Sys::OsRelease with the same source code,
-implemented with a filter on the source code changing the name of the module.
-The name change is just to prevent a namespace collision in CPAN, but is otherwise the same module.
-It is packaged with L<ExtUtils::MakeMaker> to maintain availability back to Perl 5.10.
-Compatibility was at the time still being maintained via CPAN testing back to 5.10.
-The use case was systems with RHEL 6 on Perl 5.10 and RHEL 7 on Perl 5.16,
-or similar variations on enterprise or other infrastructure installations.
 
 =back
 
