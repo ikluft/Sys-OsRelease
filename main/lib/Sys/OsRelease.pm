@@ -792,6 +792,18 @@ which includes descriptions of each attribute.
 
 =back
 
+=head1 INTERNAL DATA STRUCTURE
+
+Sys::OsRelease and Sys::OsRelease::Lite objects returned from instance() or osrelease() are hashes inside.
+The accessors perform a case-folding on the key before storage and retrieval,
+so that keys are case insensitive.
+In order to access the hash elements directly, the user needs to also do such a case-folding on the key.
+On Perl 5.16 and leter where the 'fc' feature is implemented, it uses the fc() builtin function.
+Before Perl 5.16, it does the best it can by using the lc() builtin, which is not precise for Unicode characters.
+But currently the os-release standard stays within the ASCII character set for attribute names.
+
+Hash keys beginning with an underscore '_' are reserved for module internal use only.
+
 =head1 SEE ALSO
 
 FreeDesktop.Org's os-release standard: L<https://www.freedesktop.org/software/systemd/man/os-release.html>
