@@ -804,6 +804,22 @@ But currently the os-release standard stays within the ASCII character set for a
 
 Hash keys beginning with an underscore '_' are reserved for module internal use only.
 
+Example code:
+
+  #!/usr/bin/env perl
+  use strict;
+  use warnings;
+  use utf8;
+
+  use if $] >= 5.022, "Sys::OsRelease";
+  use if $] < 5.022, "Sys::OsRelease::Lite";
+  use feature qw(say);
+
+  my $info = osrelease();
+  foreach my $key ( qw(name version id id_like pretty_name variant variant_id unknown_key ) ) {
+    say "$key: " . ( $info->{$key} // "[not defined]" );
+  }
+
 =head1 SEE ALSO
 
 FreeDesktop.Org's os-release standard: L<https://www.freedesktop.org/software/systemd/man/os-release.html>
