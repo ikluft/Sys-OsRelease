@@ -9,6 +9,7 @@ Change log for Sys::OsRelease
  - REVISION
  - BUG FIXES
  - DOCS
+   - add POD docs: internal data structure
 
 0.5.1 2026-08-29T22:44:40-07:00 America/Los_Angeles
  [REVISION]

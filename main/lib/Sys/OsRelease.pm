@@ -800,13 +800,13 @@ so that keys are case insensitive.
 In order to access the hash elements directly, the user needs do case-folding on the key,
 or specify lower-case keys.
 On Perl 5.16 and later where the 'fc' feature is implemented, it uses the fc() builtin function.
-Before Perl 5.16, it does the best it can by using the lc() builtin, which is not precise for Unicode characters.
-But currently the os-release standard stays within the ASCII character set for attribute names.
+Before Perl 5.16, it does the best it can by using the lc() builtin.
+The lc() workaround is currently good enough because the os-release attribute names stay within the ASCII character set.
 
-Hash keys beginning with an underscore '_' are reserved for module internal use due to potential conflict with
-future internal data keys.
+Hash keys beginning with an underscore '_' are reserved for module internal use.
+User code must not use them due to potential conflict with current and future internal data keys.
 
-Example code:
+Example code with direct data access:
 
   #!/usr/bin/env perl
   use strict;
